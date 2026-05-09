@@ -1,3 +1,26 @@
+"""
+SCRIPT: knowledge_builder.py
+ROLE: Relational Synthesis Engine (v1.0 Legacy)
+STATUS: ACTIVE - PENDING UPGRADE TO HFS v2.1
+
+DESCRIPTION:
+    This script generates a 'Knowledge Graph' by scanning research documents for 
+    predefined 'Key Concepts' and 'Citations'. It creates a JSON map used for 
+    visualizing how various papers and theories connect.
+
+LEGACY LOGIC:
+    - Performs regex-based frequency counting for a hardcoded concept dictionary.
+    - Maps relationships based on 'mentions' (Concept -> Doc) and 'cites' (Doc -> Doc).
+
+HFS v2.1 REVAMP DIRECTIVE (STRICT):
+    1. SCHEMA EXTRACTION: Transition from keyword counting to YAML Claim Schema parsing.
+    2. CONFLICT MAPPING: Automate the population of the 'Conflict Matrix' by detecting 
+       overlapping Claim IDs with divergent 'statement' or 'variable' data.
+    3. ONTOLOGY VALIDATION: Verify that every 'Entity' in the content maps to the 
+       defined Master Plan Ontology (Resource, Generator, etc.).
+    4. CONFIDENCE WEIGHTING: Replace raw frequency weights with the HFS Consensus Score.
+"""
+
 import os
 import json
 import re
@@ -10,8 +33,8 @@ TOME_DIR = 'tome'
 RESEARCH_DIR = 'research_assets/markdown_conversions'
 OUTPUT_PATH = 'app/knowledge_graph.json'
 
-# Pre-defined entities from the Tome_Prelude.md
-# Using variations and lowercasing for better matching.
+# Pre-defined entities used for relational mapping.
+# v2.1 Note: This should move to an external YAML ontology file.
 KEY_CONCEPTS = {
     "Progression without Interaction": ["progression without continuous player interaction", "progression without interaction"],
     "Automated Progression": ["automated progression"],
@@ -35,7 +58,7 @@ KEY_CONCEPTS = {
     "Core Loop": ["core loop", "core"],
     "Resources (in-game)": ["resources", "resource"],
     "Interaction (general)": ["interaction"],
-    # Games as concepts
+    # Games used as conceptual anchors
     "Progress Quest": ["progress quest"],
     "Cow Clicker": ["cow clicker"],
     "Cookie Clicker": ["cookie clicker"],
@@ -46,8 +69,12 @@ KEY_CONCEPTS = {
 # --- SCRIPT LOGIC ---
 
 def get_document_list(directory, doc_type):
-    """Gets a list of document dictionaries from a directory."""
+    """
+    Scans a directory for Markdown files and returns a structured list of document objects.
+    """
     docs = []
+    if not os.path.exists(directory):
+        return docs
     for filename in os.listdir(directory):
         if filename.endswith('.md'):
             docs.append({
@@ -58,47 +85,40 @@ def get_document_list(directory, doc_type):
     return docs
 
 def analyze_documents(documents, concepts):
-    """Analyzes documents to find concept mentions and create graph edges."""
+    """
+    The core analytical loop.
+    1. Scans document content for other document IDs (citations).
+    2. Scans for 'Key Concept' clusters via Regex.
+    3. Weights relationships based on frequency (Legacy).
+    """
     edges = []
-    # A dictionary to hold term counts for each doc, to be added to node metadata
     doc_term_counts = defaultdict(lambda: defaultdict(int))
 
     for doc in documents:
         try:
             with open(doc['path'], 'r', encoding='utf-8') as f:
-                content = f.read().lower() # Read and lowercase the content
-        except UnicodeDecodeError:
-            try:
-                with open(doc['path'], 'r', encoding='latin-1') as f:
-                    content = f.read().lower()
-            except Exception as e:
-                print(f"Warning: Could not read file {doc['path']} with utf-8 or latin-1. Skipping. Error: {e}")
-                continue
-        except IOError as e:
-            print(f"Warning: Could not read file {doc['path']}. Skipping. Error: {e}")
+                content = f.read().lower() 
+        except Exception:
             continue
 
-        # Find mentions of other research papers (citations)
+        # CITATION DETECTION (Legacy)
         for other_doc in documents:
             if doc['id'] == other_doc['id'] or doc['type'] != 'tome':
                 continue
 
-            # A simple citation is just mentioning the filename
-            # We look for the filename without extension as a potential citation
             other_doc_id_no_ext = os.path.splitext(other_doc['id'])[0].lower()
             if other_doc_id_no_ext in content:
                  edges.append({
                     'source': doc['id'],
                     'target': other_doc['id'],
                     'type': 'cites',
-                    'weight': 1 # Simple citation has a weight of 1
+                    'weight': 1 
                 })
 
-        # Find mentions of key concepts
+        # CONCEPT CLUSTERING (Legacy)
         for concept_name, variations in concepts.items():
             count = 0
             for term in variations:
-                # Use regex to find whole words/phrases only to avoid partial matches
                 count += len(re.findall(r'\b' + re.escape(term) + r'\b', content))
             
             if count > 0:
@@ -114,23 +134,23 @@ def analyze_documents(documents, concepts):
 
 
 def main():
-    """Main function to build and save the knowledge graph."""
+    """
+    Orchestrates the build process and saves the final JSON graph.
+    """
     print("Starting knowledge graph generation...")
 
-    # 1. Get document lists
+    # 1. Gather all documents from Tome and Research dirs
     tome_docs = get_document_list(TOME_DIR, 'tome')
     research_docs = get_document_list(RESEARCH_DIR, 'research')
     all_docs = tome_docs + research_docs
 
-    # 2. Create nodes
-    # Document nodes
+    # 2. Initialize Nodes (Docs + Concepts)
     nodes = [{
         'id': doc['id'], 
         'type': doc['type'],
         'label': doc['id'].replace('.md', '').replace('_', ' ')
     } for doc in all_docs]
     
-    # Concept nodes
     concept_nodes = [{
         'id': name, 
         'type': 'concept',
@@ -139,28 +159,28 @@ def main():
     
     nodes.extend(concept_nodes)
 
-    # 3. Analyze and create edges
+    # 3. Create Edges via Relationship Analysis
     edges, term_counts = analyze_documents(all_docs, KEY_CONCEPTS)
 
-    # Optional: Add term counts to the node metadata
+    # 4. Final Assembly
     for node in nodes:
         if node['id'] in term_counts:
-            node['term_counts'] = dict(term_counts[node['id']]) # Convert defaultdict to dict for JSON serialization
+            node['term_counts'] = dict(term_counts[node['id']])
 
-
-    # 4. Assemble and save the graph
     knowledge_graph = {
         'nodes': nodes,
         'edges': edges
     }
 
+    # Save to path (typically consumed by a visualization app)
     try:
+        os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
         with open(OUTPUT_PATH, 'w', encoding='utf-8') as f:
             json.dump(knowledge_graph, f, indent=2)
         print(f"Successfully created knowledge graph at {OUTPUT_PATH}")
         print(f"Found {len(nodes)} nodes and {len(edges)} edges.")
     except IOError as e:
-        print(f"Error: Could not write to output file {OUTPUT_PATH}. Error: {e}")
+        print(f"Error: {e}")
 
 
 if __name__ == '__main__':

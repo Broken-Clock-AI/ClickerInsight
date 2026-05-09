@@ -1,3 +1,18 @@
+"""
+SCRIPT: concept_finder.py
+ROLE: Semantic Entity Extractor (v1.0 Legacy)
+STATUS: REVAMP REQUIRED
+
+DESCRIPTION:
+    Uses TF-IDF to identify significant phrases and suggested concepts from the Tome.
+
+HFS v2.1 REVAMP DIRECTIVE:
+    1. ONTOLOGY EXPANSION: Use this tool to identify *new* candidate entities for 
+       the 'Meta/Aesthetic' layer of the Master Ontology.
+    2. SCHEMATIC MATCHING: Compare extracted phrases against the 'Claim Statement' 
+       fields in the Matrix.
+"""
+
 import os
 import json
 from sklearn.feature_extraction.text import TfidfVectorizer

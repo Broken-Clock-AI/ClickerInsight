@@ -1,3 +1,16 @@
+"""
+SCRIPT: harvest_2026.py
+ROLE: Automated Retrieval (DEPRECATED)
+STATUS: ARCHIVED / DO NOT USE
+
+DESCRIPTION:
+    Legacy script used for harvesting 2026 papers. 
+
+REASON FOR DEPRECATION:
+    Contains hardcoded queries for hallucinated/fictional papers discovered during 
+    the Reality Audit (May 8, 2026). Use the 'External Search Brief' for new searches.
+"""
+
 import os
 import time
 from googlesearch import search

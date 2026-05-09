@@ -1,3 +1,18 @@
+"""
+SCRIPT: synthesis_analysis.py
+ROLE: Synthesis Logic Auditor (v1.0 Legacy)
+STATUS: REVAMP REQUIRED
+
+DESCRIPTION:
+    Compares original tomes against the final synthesis to measure concept coverage.
+
+HFS v2.1 REVAMP DIRECTIVE:
+    1. CONFLICT AUDIT: Update to track 'Conflict Resolution' status from the 
+       Conflict Matrix.
+    2. TRUTH ARBITRATION: Measure how many 'Temporal Supersessions' were correctly 
+       applied (Legacy vs 2026).
+"""
+
 import re
 import json
 

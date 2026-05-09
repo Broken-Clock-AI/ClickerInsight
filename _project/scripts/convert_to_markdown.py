@@ -1,3 +1,15 @@
+"""
+SCRIPT: convert_to_markdown.py
+ROLE: Ingestion Utility (v1.0 Legacy)
+STATUS: STABLE UTILITY
+
+DESCRIPTION:
+    Converts HTML downloads into clean Markdown for extraction.
+
+HFS v2.1 NOTE:
+    This tool remains valid for the 'Markdown Normalization' step of Phase 1.
+"""
+
 import os
 import re
 try:

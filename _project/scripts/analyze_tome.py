@@ -1,3 +1,17 @@
+"""
+SCRIPT: analyze_tome.py
+ROLE: Quality & Coverage Auditor (v1.0 Legacy)
+STATUS: REVAMP REQUIRED
+
+DESCRIPTION:
+    Analyzes the synthesized Tome for word counts, chapter counts, and keyword density.
+
+HFS v2.1 REVAMP DIRECTIVE:
+    1. CLAIM COVERAGE: Move from 'keyword bolding' detection to 'Claim ID' verification.
+    2. CITATION RIGOR: Verify that every paragraph contains a valid link to the 
+       Global Synthesis Matrix.
+    3. ONTOLOGY CHECK: Verify that no non-ontological entities are introduced in the text.
+"""
 
 import os
 import re
