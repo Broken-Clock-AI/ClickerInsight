@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>The Math of Idle Games, Part II</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:title" content="The Math of Idle Games, Part II" />
+    <meta property="og:url" content="https://blog.kongregate.com/the-math-of-idle-games-part-ii/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Kongregate Developers" />
+    <meta property="og:image" content="http://cdn1.kongcdn.com/assets/files/0000/3360/kongregate_developers_icon.png" />
+    <!-- Favico Start -->
+    <link rel="shortcut icon" type="image/png" href="https://blog.kongregate.com/favicon.ico">
+    <link href="https://blog.kongregate.com/assets/imgs/fav/57.png?v=d18eea0ebf"  rel="apple-touch-icon" sizes="57x57" />
+    <link href="https://blog.kongregate.com/assets/imgs/fav/114.png?v=d18eea0ebf" rel="apple-touch-icon" sizes="114x114" />
+    <link href="https://blog.kongregate.com/assets/imgs/fav/72.png?v=d18eea0ebf"  rel="apple-touch-icon" sizes="72x72" />
+    <link href="https://blog.kongregate.com/assets/imgs/fav/144.png?v=d18eea0ebf" rel="apple-touch-icon" sizes="144x144" />
+    <link href="https://blog.kongregate.com/assets/imgs/fav/60.png?v=d18eea0ebf"  rel="apple-touch-icon" sizes="60x60" />
+    <link href="https://blog.kongregate.com/assets/imgs/fav/120.png?v=d18eea0ebf" rel="apple-touch-icon" sizes="120x120" />
+    <link href="https://blog.kongregate.com/assets/imgs/fav/76.png?v=d18eea0ebf"  rel="apple-touch-icon" sizes="76x76" />
+    <link href="https://blog.kongregate.com/assets/imgs/fav/152.png?v=d18eea0ebf" rel="apple-touch-icon" sizes="152x152" />
+    <link href="https://blog.kongregate.com/assets/imgs/fav/196.png?v=d18eea0ebf" rel="icon" sizes="196x196" type="image/png" />
+    <link href="https://blog.kongregate.com/assets/imgs/fav/160.png?v=d18eea0ebf" rel="icon" sizes="160x160" type="image/png" />
+    <link href="https://blog.kongregate.com/assets/imgs/fav/48.png?v=d18eea0ebf"  rel="icon" sizes="48x48" type="image/png" />
+    <link href="https://blog.kongregate.com/assets/imgs/fav/96.png?v=d18eea0ebf"  rel="icon" sizes="96x96" type="image/png" />
+    <link href="https://blog.kongregate.com/assets/imgs/fav/16.png?v=d18eea0ebf"  rel="icon" sizes="16x16" type="image/png" />
+    <link href="https://blog.kongregate.com/assets/imgs/fav/32.png?v=d18eea0ebf"  rel="icon" sizes="32x32" type="image/png" />
+    <meta name="msapplication-TileColor" content="#990000" />
+    <meta name="msapplication-TileImage" content="https://blog.kongregate.com/assets/imgs/fav/144.png?v=d18eea0ebf" />
+    <!-- Favico End -->
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300i,400,600,700|Source+Sans+Pro:400,400i,700,700i|Roboto+Mono:400,400i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://blog.kongregate.com/assets/css/styles.css?v=d18eea0ebf" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+    <script src="https://use.typekit.net/wfh2dee.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <!--[if lt IE 10]>
+    <script type="text/javascript" src="https://blog.kongregate.com/assets/js/html5shiv.min.js?v=d18eea0ebf"></script>
+    <![endif]-->
+    <link rel="canonical" href="https://blog.kongregate.com/the-math-of-idle-games-part-ii/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+    <meta property="og:site_name" content="Kongregate Newsroom">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="The Math of Idle Games, Part II">
+    <meta property="og:description" content="A few weeks ago, in Part I [https://blog.kongregate.com/the-math-of-idle-games-part-i] of this
+three-part series, we looked at some of the standard math behind rapid-growth
+idle games, primarily at the relationships between exponential and polynomial
+growth and some methods of checking and adjusting the balance of the various
+generators">
+    <meta property="og:url" content="https://blog.kongregate.com/the-math-of-idle-games-part-ii/">
+    <meta property="og:image" content="https://blog.kongregate.com/content/images/2017/07/13848268535_f7d32dafac_b.jpg">
+    <meta property="article:published_time" content="2016-10-28T12:00:00.000Z">
+    <meta property="article:modified_time" content="2024-04-04T21:13:45.000Z">
+    <meta property="article:tag" content="Game Development">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Math of Idle Games, Part II">
+    <meta name="twitter:description" content="A few weeks ago, in Part I [https://blog.kongregate.com/the-math-of-idle-games-part-i] of this
+three-part series, we looked at some of the standard math behind rapid-growth
+idle games, primarily at the relationships between exponential and polynomial
+growth and some methods of checking and adjusting the balance of the various
+generators">
+    <meta name="twitter:url" content="https://blog.kongregate.com/the-math-of-idle-games-part-ii/">
+    <meta name="twitter:image" content="https://blog.kongregate.com/content/images/2017/07/13848268535_f7d32dafac_b.jpg">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Kongregate">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="Game Development">
+    <meta name="twitter:site" content="@kongregate">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="761">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Kongregate Newsroom",
+        "url": "https://blog.kongregate.com/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://blog.kongregate.com/content/images/2017/06/konglogo.png",
+            "width": 60,
+            "height": 60
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Kongregate",
+        "url": "https://blog.kongregate.com/author/kongregate/",
+        "sameAs": [
+            "http://www.kongregate.com/"
+        ]
+    },
+    "headline": "The Math of Idle Games, Part II",
+    "url": "https://blog.kongregate.com/the-math-of-idle-games-part-ii/",
+    "datePublished": "2016-10-28T12:00:00.000Z",
+    "dateModified": "2024-04-04T21:13:45.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://blog.kongregate.com/content/images/2017/07/13848268535_f7d32dafac_b.jpg",
+        "width": 1024,
+        "height": 761
+    },
+    "keywords": "Game Development",
+    "description": "A few weeks ago, in Part I [https://blog.kongregate.com/the-math-of-idle-games-part-i] of this\nthree-part series, we looked at some of the standard math behind rapid-growth\nidle games, primarily at the relationships between exponential and polynomial\ngrowth and some methods of checking and adjusting the balance of the various\ngenerators over time.\n\nIn Part II we’re going to explore a different option for growth outside of the\nCookie Clicker model that the vast majority of idle games use these da",
+    "mainEntityOfPage": "https://blog.kongregate.com/the-math-of-idle-games-part-ii/"
+}
+    </script>
+
+    <meta name="generator" content="Ghost 6.9">
+    <link rel="alternate" type="application/rss+xml" title="Kongregate Newsroom" href="https://blog.kongregate.com/rss/">
+    <script defer src="https://cdn.jsdelivr.net/ghost/portal@~2.56/umd/portal.min.js" data-i18n="true" data-ghost="https://blog.kongregate.com/" data-key="297eefda970784b5a864e0405f" data-api="https://kongregatedev.ghost.io/ghost/api/content/" data-locale="en" crossorigin="anonymous"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+.gh-post-upgrade-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.gh-post-upgrade-cta-content {
+    border-radius: 8px;
+    padding: 40px 4vw;
+}
+
+.gh-post-upgrade-cta h2 {
+    color: #ffffff;
+    font-size: 28px;
+    letter-spacing: -0.2px;
+    margin: 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta p {
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta small {
+    font-size: 16px;
+    letter-spacing: -0.2px;
+}
+
+.gh-post-upgrade-cta a {
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a:hover {
+    color: #ffffff;
+    opacity: 0.8;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a.gh-btn {
+    display: block;
+    background: #ffffff;
+    text-decoration: none;
+    margin: 28px 0 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gh-post-upgrade-cta a.gh-btn:hover {
+    opacity: 0.92;
+}</style>
+    <script defer src="https://cdn.jsdelivr.net/ghost/sodo-search@~1.8/umd/sodo-search.min.js" data-key="297eefda970784b5a864e0405f" data-styles="https://cdn.jsdelivr.net/ghost/sodo-search@~1.8/umd/main.css" data-sodo-search="https://kongregatedev.ghost.io/" data-locale="en" crossorigin="anonymous"></script>
+    
+    <link href="https://blog.kongregate.com/webmentions/receive/" rel="webmention">
+    <script defer src="/public/cards.min.js?v=d18eea0ebf"></script>
+    <link rel="stylesheet" type="text/css" href="/public/cards.min.css?v=d18eea0ebf">
+    <script defer src="/public/member-attribution.min.js?v=d18eea0ebf"></script><style>:root {--ghost-accent-color: #fb10dc;}</style>
+  </head>
+  <body class="post-template tag-game-development tag-hash-anthony-pecorella">
+    <div id="fb-root"></div>
+    <header class="c_header">
+  <nav class="c_mast">
+    <strong class="c_mast--logo">
+      <a href="https://developers.kongregate.com/" class="c_mast--logo_link notxt">Kongregate Developers</a>
+    </strong>
+    <ul class="c_mast--list">
+      <li class="c_mast--item">
+        <a href="https://developers.kongregate.com/make-games" class="c_mast--link">Make Games</a>
+      </li>
+      <li class="c_mast--item">
+        <a href="https://docs.kongregate.com" class="c_mast--link">Docs</a>
+      </li>
+      <li class="c_mast--item">
+        <a href="http://www.kongregate.com/forums/4-game-programming" class="c_mast--link">Forums</a>
+      </li>
+      <li class="c_mast--item">
+        <a href="https://blog.kongregate.com" class="c_mast--link">Blog</a>
+      </li>
+      <li class="c_mast--item">
+        <a href="https://docs.kongregate.com/docs/faq" class="c_mast--link">Faq</a>
+      </li>
+    </ul>
+  </nav>
+  <h1 class="c_header--logo">
+    <a title="Kongregate Developers Blog" href="https://blog.kongregate.com" class="c_header--logo_link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 413 66" class="c_header--logo_img">
+        <style>
+          .st0{fill:#484848;} .st1{fill:#565656;}
+        </style>
+        <title>Kongregate Developers Blog</title>
+        <path d="M85.7 24.7v-3.8h1.9l.1-.2L83 14l-3.5 3.2v3.3l.1.2 2.7.9v3.2H71.6V21H74l.1-.2V5.3l-.1-.2-2.7-1V1h10.8v3.8h-2.5l-.1.2v8.2L88 5.1V5l-1.3-.4-1.1-.4V1h10.8v3.8h-1.7l-.3.1-7.6 6.5 7 9.2.2.2 2.8.9v3.2H85.7v-.2zm25.4.7c-8.5 0-11.2-4-11.2-11.9 0-10.1 4.7-13 12.3-13 8.5 0 11.2 4 11.2 11.9.1 10-4.7 13-12.3 13zm.5-21.1c-4.5 0-6.1 2.1-6.1 7.9 0 7.8 1.1 9.2 6.2 9.2 4.5 0 6.1-2.1 6.1-7.9 0-7.8-1-9.2-6.2-9.2zm42 .5h-2.4l-.2.1v20.3h-6.8l-9.5-19h-.7v14.2l.1.2 3.2 1v3.2h-10V21h2.4l.1-.2V5.3l-.1-.2-2.7-.9V1h10l9.1 18.3h.6v-14l-.1-.2-3.2-1V1h10.1l.1 3.8zM180 16.3h-2.4l-.1.2v3.3l2.3.6v2.9c-3.3 1-7.1 1.9-11.3 1.9-8.7 0-11.5-3.8-11.5-11.9 0-10 4.6-13 12.2-13 2.6 0 3.9.4 5 .8l3.7-1.1v8.5h-3.7l-1.1-3.3c-1.3-.6-2.4-.9-4.6-.9-4.5 0-5.9 2.5-5.9 7.9 0 7.6 1.1 9.2 6.3 9.2 1.5 0 2.7-.2 3.6-.5v-4.1l-.1-.2-3.3-.8v-3.2H180v3.7zm20 8.4l-1.9-4-2.7-5.5-3.1.4v4.9l.1.2 2.4.8v3.2h-10.3v-3.8h2.4l.1-.2V5.3l-.1-.2-2.7-1V1h11.1c7.7 0 10.1 1.8 10.1 6.6 0 4-1.9 6.1-5.1 7.2l3.8 5.7.2.2 2.5.9v3.2H200v-.1zm-5.4-19.9h-2.3v7.4l2.6.3c3-.6 4.6-1.7 4.6-4.3s-.9-3.4-4.9-3.4zm37.3 19.9h-21.3v-3.8h2.4l.1-.2V5.3l-.1-.2-2.7-1V1h21.8v8.3h-3.8l-.6-2.8c-.4-1.6-.8-1.8-7.8-1.8h-1.4v6.6h1.3c1.9 0 2.2-.1 2.5-1.1l.6-1.8h3.1l-.9 8.5h-2.7l-.5-1.9c-.2-.7-.5-.8-2.2-.8h-1.3v6.7h1.4c6.7 0 7.2-.2 7.9-2.2l.8-2.3h4l-.6 8.3zm28.2-8.4h-2.4l-.1.2v3.3l2.3.6v2.9c-3.3 1-7.1 1.9-11.3 1.9-8.7 0-11.5-3.8-11.5-11.9 0-10 4.6-13 12.2-13 2.6 0 3.9.4 5 .8L258 0v8.5h-3.7l-1.2-3.3c-1.3-.6-2.4-.9-4.6-.9-4.5 0-5.9 2.5-5.9 7.9 0 7.6 1.1 9.2 6.3 9.2 1.5 0 2.7-.2 3.6-.5v-4.1l-.1-.2-3.3-.8v-3.2H260v3.7h.1zm17.7 8.4v-3.8h2.1l.1-.2-.9-3.6h-7.8l-.8 3.3.1.2 2.4.9v3.2h-9.4v-3.8h2.3l.2-.2L271.9 3V1.6l7.3-1.3 6.5 20.2.2.2 2.7.9v3.2h-10.8v-.1zm-2.3-19.9h-.6l-2.5 9.1h5.5l-2.4-9.1zm33 5.1l-.7-3.6c-.3-1.2-.5-1.7-3.5-1.7h-1v16.1l3.5.9v3.2h-12.2V21h3.2l.1-.2V4.6h-.9c-2.9 0-3.2.5-3.5 1.6l-1 3.8h-4.1l.7-8.9h23.2V10l-3.8-.1zm29.6 14.8h-21.3v-3.8h2.4l.1-.2V5.3l-.1-.2-2.7-1V1h21.8v8.3h-3.8l-.5-2.8c-.4-1.6-.8-1.8-7.8-1.8h-1.4v6.6h1.3c1.9 0 2.2-.1 2.5-1.1l.6-1.8h3.1l-.9 8.5h-2.7l-.5-1.9c-.2-.7-.5-.8-2.2-.8h-1.3v6.7h1.4c6.7 0 7.2-.2 7.9-2.2l.8-2.3h4l-.7 8.3z" class="st0"/>
+        <path d="M17.9 54.9c0 1.6-.2 3.1-.7 4.4-.5 1.3-1.2 2.4-2.1 3.3s-2 1.6-3.2 2.1-2.6.7-4.1.7H0V44.3h7.8c1.5 0 2.9.2 4.1.7s2.3 1.2 3.2 2.1 1.6 2 2.1 3.3c.4 1.4.7 2.8.7 4.5zm-1.6 0c0-1.5-.2-2.8-.6-4s-1-2.1-1.7-2.9c-.8-.8-1.6-1.4-2.7-1.8-1.1-.4-2.2-.6-3.5-.6H1.5v18.6h6.2c1.3 0 2.4-.2 3.5-.6 1-.4 1.9-1 2.7-1.8s1.3-1.8 1.7-2.9c.5-1.2.7-2.5.7-4zM46 64.2v1.3H33.3V44.3H46v1.3H34.8v8.6h9.3v1.2h-9.3v8.8H46zm32.1-19.9l-8.8 21.2H68l-8.8-21.2h1.2c.1 0 .3 0 .3.1.1.1.2.2.2.3l7.2 17.6c.1.2.2.5.2.7s.2.5.2.8c.1-.3.1-.5.2-.8s.2-.5.2-.7l7.2-17.6c0-.1.1-.2.2-.3s.2-.1.4-.1h1.4zm26.8 19.9v1.3H92.2V44.3h12.7v1.3H93.7v8.6h9.3v1.2h-9.3v8.8h11.2zm26.2 0v1.3h-11.6V44.3h1.5v19.9h10.1zm31.8-9.3c0 1.6-.2 3.1-.7 4.5-.5 1.3-1.2 2.5-2.1 3.4-.9.9-2 1.7-3.2 2.2s-2.6.8-4.1.8-2.9-.3-4.1-.8c-1.2-.5-2.3-1.2-3.2-2.2-.9-.9-1.6-2.1-2.1-3.4-.5-1.3-.7-2.8-.7-4.5 0-1.6.2-3.1.7-4.4.5-1.3 1.2-2.5 2.1-3.4.9-.9 2-1.7 3.2-2.2s2.6-.8 4.1-.8 2.9.3 4.1.8 2.3 1.2 3.2 2.2 1.6 2.1 2.1 3.4.7 2.7.7 4.4zm-1.6 0c0-1.5-.2-2.8-.6-4-.4-1.2-1-2.2-1.7-3-.8-.8-1.7-1.4-2.7-1.9-1-.4-2.2-.7-3.5-.7s-2.4.2-3.5.7c-1.1.4-2 1.1-2.7 1.9-.8.8-1.3 1.8-1.8 3-.4 1.2-.6 2.5-.6 4s.2 2.8.6 4c.4 1.2 1 2.2 1.8 3s1.7 1.4 2.7 1.9c1 .4 2.2.6 3.5.6s2.4-.2 3.5-.6c1.1-.4 2-1.1 2.7-1.9s1.3-1.8 1.7-3 .6-2.5.6-4zm22.4-10.6c2.5 0 4.4.5 5.6 1.6 1.3 1.1 1.9 2.6 1.9 4.7 0 .9-.2 1.8-.5 2.6s-.8 1.5-1.5 2c-.7.6-1.4 1-2.4 1.3-.9.3-2 .5-3.1.5h-3.9v8.5h-1.5V44.3h5.4zm0 11.4c.9 0 1.8-.1 2.5-.4s1.4-.6 1.9-1.1.9-1 1.2-1.6.4-1.3.4-2c0-1.6-.5-2.9-1.5-3.8-1-.9-2.5-1.3-4.5-1.3h-3.9v10.2h3.9zm34.7 8.5v1.3h-12.7V44.3h12.7v1.3h-11.2v8.6h9.3v1.2h-9.3v8.8h11.2zm29.2 1.3h-1.3c-.2 0-.3 0-.4-.1l-.3-.3-6.8-8.6c-.1-.1-.2-.2-.2-.3s-.2-.1-.3-.2c-.1 0-.2-.1-.4-.1h-3.3v9.6H233V44.3h5.4c2.4 0 4.3.5 5.5 1.4s1.8 2.3 1.8 4.2c0 .8-.1 1.5-.4 2.2-.3.7-.7 1.3-1.2 1.8s-1.2.9-1.9 1.2-1.6.5-2.5.6c.2.1.5.3.6.6l7.3 9.2zm-9.4-10.7c.9 0 1.8-.1 2.5-.3s1.4-.5 1.9-1 .9-.9 1.2-1.5.4-1.3.4-2c0-1.5-.5-2.6-1.5-3.4-1-.7-2.4-1.1-4.3-1.1h-3.9v9.3h3.7zm33.9-8c-.1.2-.2.3-.4.3-.1 0-.3-.1-.5-.3s-.5-.4-.8-.6c-.3-.2-.8-.4-1.3-.6-.5-.2-1.2-.3-1.9-.3-.8 0-1.4.1-2 .3s-1.1.5-1.5.9-.7.8-.9 1.3c-.2.5-.3 1-.3 1.6 0 .7.2 1.3.5 1.8s.7.9 1.2 1.2 1.1.6 1.7.8 1.3.4 2 .7c.7.2 1.3.5 2 .7s1.2.6 1.7 1 .9.9 1.2 1.5c.3.6.5 1.3.5 2.2s-.2 1.7-.5 2.5-.7 1.5-1.3 2c-.6.5-1.3 1-2.1 1.4-.8.3-1.8.5-2.9.5-1.4 0-2.6-.2-3.6-.7s-1.9-1.2-2.7-2l.4-.7c.1-.2.3-.2.4-.2s.2.1.3.2c.1.1.3.3.5.4.2.2.4.4.7.6.3.2.6.4 1 .6s.8.3 1.3.4 1 .2 1.6.2c.8 0 1.6-.1 2.2-.4.7-.3 1.2-.6 1.7-1s.8-1 1-1.6.4-1.3.4-1.9c0-.8-.2-1.4-.5-1.9s-.7-.9-1.2-1.2-1.1-.6-1.7-.8-1.3-.4-2-.6-1.3-.4-2-.7c-.6-.3-1.2-.6-1.7-1s-.9-.9-1.2-1.5c-.3-.6-.5-1.4-.5-2.3 0-.7.1-1.4.4-2.1.3-.7.7-1.2 1.2-1.7s1.2-.9 1.9-1.2c.8-.3 1.6-.5 2.6-.5 1.1 0 2.1.2 3 .5s1.7.9 2.4 1.6l-.3.6zm41.5-2.5c1.2 0 2.3.1 3.1.4.9.2 1.6.6 2.2 1.1s1 1 1.3 1.7.4 1.4.4 2.3c0 .6-.1 1.1-.3 1.6-.2.5-.5 1-.8 1.4-.4.4-.8.8-1.4 1.1-.5.3-1.1.6-1.8.7 1.7.2 3 .8 3.8 1.7.9.9 1.3 2 1.3 3.4 0 .9-.2 1.7-.5 2.4s-.8 1.3-1.4 1.8c-.6.5-1.4.9-2.2 1.1s-1.9.4-3 .4h-6.9V44.3h6.2zm-4.6 1.2v8.7h4.6c1 0 1.8-.1 2.5-.4s1.3-.6 1.7-1c.4-.4.8-.9 1-1.4s.3-1.1.3-1.6c0-1.4-.5-2.5-1.4-3.2s-2.3-1.1-4.2-1.1H309zm5.4 18.8c1.9 0 3.3-.4 4.2-1.2s1.4-1.9 1.4-3.4c0-.7-.1-1.3-.4-1.8s-.6-1-1.1-1.4-1.1-.7-1.8-.9c-.7-.2-1.5-.3-2.4-.3H309v8.9h5.4v.1zm34.1-.1v1.3h-11.6V44.3h1.5v19.9h10.1zm31.8-9.3c0 1.6-.2 3.1-.7 4.5-.5 1.3-1.2 2.5-2.1 3.4s-2 1.7-3.2 2.2-2.6.8-4.1.8-2.9-.3-4.1-.8-2.3-1.2-3.2-2.2c-.9-.9-1.6-2.1-2.1-3.4-.5-1.3-.7-2.8-.7-4.5 0-1.6.2-3.1.7-4.4.5-1.3 1.2-2.5 2.1-3.4s2-1.7 3.2-2.2 2.6-.8 4.1-.8 2.9.3 4.1.8 2.3 1.2 3.2 2.2c.9 1 1.6 2.1 2.1 3.4s.7 2.7.7 4.4zm-1.6 0c0-1.5-.2-2.8-.6-4s-1-2.2-1.7-3c-.8-.8-1.7-1.4-2.7-1.9-1-.4-2.2-.7-3.5-.7s-2.4.2-3.5.7c-1.1.4-2 1.1-2.7 1.9-.8.8-1.3 1.8-1.8 3-.4 1.2-.6 2.5-.6 4s.2 2.8.6 4 1 2.2 1.8 3 1.7 1.4 2.7 1.9c1 .4 2.2.6 3.5.6s2.4-.2 3.5-.6c1.1-.4 2-1.1 2.7-1.9s1.3-1.8 1.7-3c.4-1.2.6-2.5.6-4zm34 1v7.5c-1.1.8-2.2 1.3-3.4 1.7-1.2.4-2.6.6-4.1.6-1.7 0-3.2-.3-4.5-.8s-2.5-1.2-3.4-2.2-1.7-2.1-2.2-3.4-.8-2.8-.8-4.5.2-3.1.7-4.5c.5-1.3 1.2-2.5 2.1-3.4s2-1.7 3.4-2.2c1.3-.5 2.8-.8 4.4-.8.8 0 1.6.1 2.2.2s1.3.3 1.9.5 1.1.5 1.7.8 1 .7 1.5 1.1l-.4.7c-.1.2-.3.3-.6.2-.1-.1-.4-.2-.6-.4-.3-.2-.7-.4-1.2-.7s-1.1-.5-1.8-.6c-.7-.2-1.6-.3-2.6-.3-1.4 0-2.6.2-3.7.7-1.1.4-2.1 1.1-2.8 1.9-.8.8-1.4 1.8-1.8 3s-.6 2.5-.6 4 .2 2.8.6 4 1 2.2 1.8 3 1.8 1.5 2.9 1.9c1.1.4 2.4.7 3.9.7.6 0 1.2 0 1.7-.1l1.5-.3c.5-.1 1-.3 1.4-.5s.9-.5 1.4-.7v-5.7h-4.1c-.1 0-.2 0-.3-.1s-.1-.2-.1-.2v-.8h5.9v-.3z" class="st1"/>
+      </svg>
+    </a>
+  </h1>
+</header>
+    <main class="l_main">
+      
+<article class="p_article">
+  <header class="p_article--header">
+    <p class="p_article--tags">
+      <a href="/tag/game-development/">Game Development</a>
+    </p>
+    <h1 class="h1 p_article--title">
+      The Math of Idle Games, Part II
+    </h1>
+    <section class="p_article--meta">
+      <time datetime="2016-10-28" class="p_article--date">
+        &mdash; October 28, 2016
+      </time>
+    </section>
+    <ul class="p_article--sharing">
+      <li class="p_article--sharing_item">
+        <a class="twitter-share-button" href="https://blog.kongregate.com/the-math-of-idle-games-part-ii/">Tweet</a>
+      </li>
+      <li class="p_article--sharing_item">
+        <div class="fb-like"
+             data-href="https://blog.kongregate.com/the-math-of-idle-games-part-ii/"
+             data-layout="button_count"
+             data-action="like"
+             data-size="small"
+             data-show-faces="false"
+             data-share="true">
+          <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.kongregate.com/the-math-of-idle-games-part-ii/&amp;src=sdkpreparse">Share on Facebook</a>
+        </div>
+      </li>
+    </ul>
+  </header>
+
+  <main class="p_article--body c_txt--reset">
+    <!--kg-card-begin: markdown--><p>A few weeks ago, in <a href="https://blog.kongregate.com/the-math-of-idle-games-part-i">Part I</a> of this three-part series, we looked at some of the standard math behind rapid-growth idle games, primarily at the relationships between exponential and polynomial growth and some methods of checking and adjusting the balance of the various generators over time.</p>
+<p>In Part II we’re going to explore a different option for growth outside of the Cookie Clicker model that the vast majority of idle games use these days. (And <a href="https://blog.kongregate.com/the-math-of-idle-games-part-iii">Part III</a> will look at prestige cycles and balance.)</p>
+<p>In the &quot;standard&quot; model, there is a primary $\color{ForestGreen}{currency}$ and a bunch of generators ($\color{Cerulean}{Gen 1}$, $\color{BurntOrange}{Gen 2}$, etc.) that produce that $\color{ForestGreen}{currency}$. In AdVenture Capitalist these are the investments generating cash. In Clicker Heroes these are the heroes generating damage, which is then converted into gold.</p>
+<p><img src="https://cdn3.kongcdn.com/assets/files/0001/8771/chrome_2016-10-28_14-33-49.jpg" alt="" loading="lazy"></p>
+<p>But who says that generators have to produce primary $\color{ForestGreen}{currency}$? What happens if generators generate other generators, like this?</p>
+<p><img src="https://cdn4.kongcdn.com/assets/files/0001/8770/chrome_2016-10-28_14-33-38.jpg" alt="" loading="lazy"></p>
+<p>You have a single generator producing the $\color{ForestGreen}{currency}$ and then a cascading chain of generators producing the previous tier. So $\color{Cerulean}{Gen 1}$ is the rate at which $\color{ForestGreen}{currency}$ is generated. $\color{BurntOrange}{Gen 2}$ is the rate at which $\color{Cerulean}{Gen 1}$ is generated, and so on. Anyone else getting twitchy calculus flashbacks? Good, because you should: these are derivatives! <em>(Note: if you don’t know or remember calculus, don’t worry -- you’re about to learn some!)</em></p>
+<p>Let’s say for a second that a single generator ($\color{Cerulean}{Gen 1}$) produces one $\color{ForestGreen}{currency}$ (the y-axis, representing total $\color{ForestGreen}{currency}$) each second (the x-axis, representing total time). We’ll graph cash in green (obvi!) and you’ll see the single $\color{Cerulean}{Gen 1}$ generator in blue. So over time the number of $\color{Cerulean}{Gen 1}$s doesn’t change, and each second we gain 1 $\color{ForestGreen}{currency}$.</p>
+<p><img src="https://cdn1.kongcdn.com/assets/files/0001/8773/chrome_2016-10-28_14-46-03.jpg" alt="" loading="lazy"></p>
+<p>Now let’s say we have a single $\color{BurntOrange}{Gen 2}$ that produces $\color{Cerulean}{Gen 1}$s at 1 per second. What does our graph look like now?</p>
+<p>First we need to clarify one oddity of looking at continuous graphs for a discrete problem like this. A $\color{Cerulean}{Gen 1}$ will produce exactly 1 $\color{ForestGreen}{currency}$ in a second. But what if that $\color{Cerulean}{Gen 1}$ is being produced that same second? It won’t generate a full $\color{ForestGreen}{currency}$ point but instead only half of one. You can think of it like $\color{Cerulean}{Gen 1}$ only half-existing in the second it is created, but even if it doesn’t make total sense, if you can accept that rule then everything else lines up in that beautiful way that math always does. With that out of the way, let’s look at the magic.</p>
+<p>At time $t$=0, we have a single $\color{BurntOrange}{Gen 2}$ that will never change, no $\color{Cerulean}{Gen 1}$s, and no $\color{ForestGreen}{currency}$.</p>
+<p>$t$=1, still a single $\color{BurntOrange}{Gen 2}$, now a single $\color{Cerulean}{Gen 1}$ (produced by the $\color{BurntOrange}{Gen 2}$), and that 0.5 $\color{ForestGreen}{currency}$ produced by that in-progress $\color{Cerulean}{Gen 1}$.</p>
+<p>$t$=2, we’re up to 2 $\color{Cerulean}{Gen 1}$s, one of which generates a whole $\color{ForestGreen}{currency}$ (the $\color{Cerulean}{Gen 1}$ created in $t$=1) and one generates a half $\color{ForestGreen}{currency}$. Add that to the previous half and we have two $\color{ForestGreen}{currency}$ at $t$=2.</p>
+<p>Now let’s graph it!</p>
+<p><img src="https://cdn1.kongcdn.com/assets/files/0001/8772/chrome_2016-10-28_14-44-19.jpg" alt="" loading="lazy"></p>
+<p>That $\color{ForestGreen}{currency}$ graph looks suspiciously like a parabola, no? It is in fact $y = \frac{x^2}{2}$. For those of you who remember your integrals, that equation will look familiar as the integral of $y = x$ (which is the equation that produces the blue angled line up there). Without going too much further down a calculus lesson, here’s the summary.</p>
+<p>A derivative is a rate of change. In this growth model, each generator represents the rate of change of the next-tier-down generator, and thus can be considered a derivative. Because these are in sequence, we can effectively keep taking integrals from a starting point to see what growth becomes as you get higher tiers of generators. The series of integrals looks like this:</p>
+<p>$1, x, \frac{x^2}{2}, \frac{x^3}{6}, \frac{x^4}{24}, ..., \frac{x^n}{n!}$</p>
+<p>So if we had 4 tiers of generators, starting with a single $Gen4$, the $\color{ForestGreen}{currency}$ would be growing at $\color{ForestGreen}\frac{x^4}{24}$, and at time $t$ the total number of all generators would be $1$ + $\color{Maroon}{t}$ + $\color{BurntOrange}{\frac{t^2}{2}}$ + $\color{Cerulean}{\frac{t^3}{6}}$.</p>
+<p>And, just to complete our circle, we’ll take a very quick look at an example from upper-level calculus. A certain type of infinitely summed series is called a Taylor Series, and there is a specific case that’s super relevant.</p>
+<p>$e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!} &gt; \sum_{n=0}^{m} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2} + \frac{x^3}{6} + \dots + \frac{x^m}{m!}$</p>
+<p>In other words, as we get more and more tiers of generators (as $m$ goes up), we approach $e^x$, which is...exponential growth!</p>
+<p><img src="https://cdn3.kongcdn.com/assets/files/0001/8742/tumblr_mhpp3g0gYM1r5rl88o1_500.gif" alt="" loading="lazy"></p>
+<p>Okay, so that was a lot of theoretical math -- where did that actually get us? We’ve learned that setting up a chain of generators starts to approach exponential growth, which means it will have a lot of the properties that we had used in our exponential games. Plus, since you're not going to have infinite generators, you'll still always eventually lag behind actual exponential growth, so costs (at exponential levels) will still outpace production (with derivative-based growth) as we want. I also find that it just &quot;feels&quot; good - as you gain more tiers you get to see the lower tiers get truly huge - it's like having multiple AdVenture Capitalist games all working together!</p>
+<p>There are a few games that already do this, perhaps most clearly is the aptly named <a href="http://gzgreg.github.io/DerivativeClicker/?ref=blog.kongregate.com">Derivative Clicker</a> by <a href="https://github.com/gzgreg?ref=blog.kongregate.com">gzgreg</a> (forked from <a href="https://github.com/Icehawk78?ref=blog.kongregate.com">icehawk78</a>), seen in the animated .gif below. Note that the single Graduate Student ($\color{Maroon}{Gen 3}$) is producing one Undergrad ($\color{BurntOrange}{Gen 2}$) per tick, while the High Schoolers ($\color{Cerulean}{Gen 1}$, which produce dollars) being generated go up quickly -- 10, then 11, then 12, etc. as the Undergrads increase. Exactly as we set up above.</p>
+<p><img src="https://cdn4.kongcdn.com/assets/files/0001/8748/2016-10-27_14-41-14.gif" alt="" loading="lazy"></p>
+<p>We can check out <a href="https://github.com/gzgreg/DerivativeClicker/tree/gh-pages?ref=blog.kongregate.com">Derivative Clicker code</a> to learn a little more, and indeed the costs are calculated using a basic exponential function as expected. The cost of High Schoolers for example is $5 \times 1.1^n$. So still exponential costs, and growth is happening sub-exponentially, which is perfect!</p>
+<p>Cirrial’s <a href="http://cirri.al/sharks/?ref=blog.kongregate.com">Shark Game</a> (a fantastic idle game if you haven’t tried it) also makes use of generators producing other generators; for example, the Nurse Sharks create Sharks that harvest fish.</p>
+<p>One of the major balance issues to solve is how to keep purchasing of lower-level tiers relevant. As you can see in the gif above, I’m gaining lots of high schoolers every second, for free. Why would I ever buy more? The answer could be that you wouldn’t and you can design your game that way, but if you want to keep them relevant, well, gzgreg’s solution is an elegant one.</p>
+<p>Notice that each generator up there has two numbers: a total owned, and then one in parentheses, which is the number actually purchased. The cost of a generator is calculated based on the purchased number, not the owned number. But more importantly, he has created tier boosts. For example, every <strong>purchased</strong> tier 1 building (like the High Schooler) boosts the production of all tier 1 buildings by 0.05%. This means that even when I have billions of High Schoolers, there’s still value in me being able to buy more manually, which creates a great sense of having lots of possible and influential ways to spend your resources.</p>
+<p>One last point on the topic. What I laid out above is the simplest version of a derivative-based system, but as a game designer you have a lot more flexibility than that, and you should be open to exploring that space. For example, here’s the general cost and production chart for Derivative Clicker. Notice that it has two currencies and generators have dependency on the production of one another, which makes for some excellent interplay during the game.</p>
+<p><img src="https://cdn1.kongcdn.com/assets/files/0001/8746/Pasted_image_at_2016_10_27_05_29_PM.png" alt="" loading="lazy"></p>
+<p>So I would encourage you to explore different types of progression within your game. The standard all-generators-contribute-to-a-primary-currency progression is great and powerful, but it can also be combined with things like this derivative-based generator concept.</p>
+<p>Make generators. Draw lines between them. See what happens! Maybe one generator can produce multiple currencies. Or multiple generators. Or maybe even <a href="http://www.kongregate.com/games/kongregate/idleplex?ref=blog.kongregate.com">more idle games</a>. The world’s your oyster, have fun with it. :)</p>
+<p><em>If you have questions, find a mistake, or have an awesome new idle game you want to share, please feel free to reach out and email me at <a href="mailto:anthony@kongregate.com">anthony@kongregate.com</a>. I also want to give credit to the tools used in this post: <a href="https://www.mathjax.org/?ref=blog.kongregate.com">MathJax</a> did the awesome live-rendering of LaTeX, <a href="https://www.draw.io/?ref=blog.kongregate.com">Draw.io</a> is a quick and free flowchart web app, and <a href="https://www.desmos.com/?ref=blog.kongregate.com">Desmos</a> is a slick in-browser graphing calculator with some great educational functionality.</em></p>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+        extensions: ["color.js"]
+    },
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']]
+    }
+  });
+</script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script><!--kg-card-end: markdown-->
+  </main>
+
+  <aside class="p_article--follow">
+    <h2 class="p_article--follow_title">Follow us on Twitter to keep up-to-date with our weekly blog posts.</h2>
+    <p class="p_article--follow_twitter">
+      <a class="twitter-follow-button" href="https://twitter.com/kongregate">
+        Follow Kongregate
+      </a>
+    </p>
+  </aside>
+
+  <footer class="p_article--author">
+      <section class="c_author">
+    <h2 class="c_author--name">
+      <a href="https://blog.kongregate.com/author/kongregate/" class="c_author--link">
+        Kongregate
+      </a>
+    </h2>
+    <p class="c_author--more">
+      <a href="https://blog.kongregate.com/author/kongregate/">Read more posts by this author »</a>
+    </p>
+  </section>
+  </footer>
+
+  <aside class="c_suggestions">
+    <h2  class="c_suggestions--title">More articles you might like:</h2>
+
+    <ul class="c_suggestion--list">
+
+      <li class="p_home--article">
+        <article class="c_post c_post--mini c_post--cat_ js_clickable post featured">
+  <header class="c_post--header">
+    <a href="https://blog.kongregate.com/developer-spotlight-updated-integration-documents/" class="c_post--img_cont">
+      <span class="c_post--img" style="background-image: url(/content/images/2024/02/Rogue-Sword-Dungeoneers-Kongregate-Testimonial-YouTube-Thumbnail--1--1.png);"></span>
+    </a>
+    <time class="c_post--time" datetime="2024-02-14">
+      Feb 14, 2024
+    </time>
+    <h2 class="h1 c_post--title truncate">
+      <a href="https://blog.kongregate.com/developer-spotlight-updated-integration-documents/" class="c_post--link js_clickable--url">
+        Developer Spotlight &amp; Updated Integration Documents
+      </a>
+    </h2>
+  </header>
+  <main class="c_post--excerpt">
+    <p>Updated Integration Docs
+
+To make our onboarding process more efficient, we&#39;ve updated our integration documentation here.
+
+We also created a Photoshop file for previewing how your game icon &amp; screenshots will look on the new game cards on our platform. The link can be found here!
+
+
+
+Developer Spotlight | Rogue Sword
+
+Watch our video spotlight on Rogue Sword, creators of Dungeoneers.
+
+If you&#39;re interested in being featured in a livestream or dev spotlight video, please reach out to marketing@kon</p>
+  </main>
+  <a href="https://blog.kongregate.com/developer-spotlight-updated-integration-documents/" class="b_sec--l c_post--btn">
+    Read More
+  </a>
+</article>
+      </li>
+      <li class="p_home--article">
+        <article class="c_post c_post--mini c_post--cat_ js_clickable post">
+  <header class="c_post--header">
+    <a href="https://blog.kongregate.com/game-on-with-the-new-achievement-page/" class="c_post--img_cont">
+      <span class="c_post--img" style="background-image: url(/content/images/2024/01/achievements-january-launch.png);"></span>
+    </a>
+    <time class="c_post--time" datetime="2024-01-17">
+      Jan 17, 2024
+    </time>
+    <h2 class="h1 c_post--title truncate">
+      <a href="https://blog.kongregate.com/game-on-with-the-new-achievement-page/" class="c_post--link js_clickable--url">
+        Game On—With the New Achievements Page!
+      </a>
+    </h2>
+  </header>
+  <main class="c_post--excerpt">
+    <p>We&#39;re thrilled to unveil exciting updates to our Achievements page, designed to elevate your experience in discovering and celebrating your gaming milestones. These enhancements are already live—dive right in and explore our latest features!
+
+
+Weekly Kongpanion Banner Redesigned
+
+The Weekly Kongpanion Banner got a facelift, sporting a new look and introducing mini badges. These new elements add a charming touch to each edition and shiny state. Animations now celebrate your achievements with exci</p>
+  </main>
+  <a href="https://blog.kongregate.com/game-on-with-the-new-achievement-page/" class="b_sec--l c_post--btn">
+    Read More
+  </a>
+</article>
+      </li>
+      <li class="p_home--article">
+        <article class="c_post c_post--mini c_post--cat_ js_clickable post">
+  <header class="c_post--header">
+    <a href="https://blog.kongregate.com/beyond-the-pixels-exploring-the-artistic-vision-of-bit-heroes-quest-2/" class="c_post--img_cont">
+      <span class="c_post--img" style="background-image: url(/content/images/2024/01/image6.png);"></span>
+    </a>
+    <time class="c_post--time" datetime="2024-01-17">
+      Jan 17, 2024
+    </time>
+    <h2 class="h1 c_post--title truncate">
+      <a href="https://blog.kongregate.com/beyond-the-pixels-exploring-the-artistic-vision-of-bit-heroes-quest-2/" class="c_post--link js_clickable--url">
+        Beyond the Pixels: Exploring the Artistic Vision of Bit Heroes Quest
+      </a>
+    </h2>
+  </header>
+  <main class="c_post--excerpt">
+    <p>Bit Heroes Quest stands out for many things, including its freedom to include any theme in the game and multiple game modes, but there is one visual theme that is intrinsic to the game - and that is BIT.
+
+Pixel art is an art form that uses singular pixels to construct a 2D digital image block by block, and is one of the most distinctive features of the game.
+
+To talk about the art, inspiration, and challenges of Bit Heroes Quest, we have with us the project&#39;s art director, Octo.
+
+Would you like</p>
+  </main>
+  <a href="https://blog.kongregate.com/beyond-the-pixels-exploring-the-artistic-vision-of-bit-heroes-quest-2/" class="b_sec--l c_post--btn">
+    Read More
+  </a>
+</article>
+      </li>
+
+    </ul>
+  </aside>
+
+</article>
+
+    </main>
+    <footer class="c_footer">
+  <div class="c_footer--inner">
+    <a href="http://www.kongregate.com/" class="c_footer--logo notxt">
+      Kongregate
+    </a>
+    <p class="c_footer--msg">
+      We update our developers blog on a weekly basis, aiming to be a shared source of learnings, data, and information for developers. Follow us on Twitter for the latest posts.
+    </p>
+    <p class="c_footer--copyright">
+      <span class="c_footer--copyright_mark">&copy;</span> Kongregate 2017
+    </p>
+    <p class="c_footer--twitter">
+      <a
+        class="twitter-follow-button"
+        href="https://twitter.com/kongregate"
+        data-size="small"
+        data-show-count="false"
+      >
+        Follow Kongregate on Twitter
+      </a>
+    </p>
+  </div>
+</footer>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+    <script src="https://blog.kongregate.com/assets/js/jquery.dotdotdot.min.js?v=d18eea0ebf"></script>
+    <script src="https://blog.kongregate.com/assets/js/scripts.js?v=d18eea0ebf"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-211785-39', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>

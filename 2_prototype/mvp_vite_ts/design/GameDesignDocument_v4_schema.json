@@ -1,0 +1,242 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Game Design Document v4",
+  "description": "A schema for defining a rich, research-informed incremental game, based on the principles from 'The Compounding Illusion' tome, incorporating feedback for enhanced depth and player experience.",
+  "type": "object",
+  "properties": {
+    "meta": {
+      "type": "object",
+      "properties": {
+        "gameTitle": { "type": "string" },
+        "gameVersion": { "type": "string" }
+      },
+      "required": ["gameTitle", "gameVersion"]
+    },
+    "playerExperience": {
+      "type": "object",
+      "properties": {
+        "numberFormatting": { "type": "string", "enum": ["standard", "scientific", "engineering"] },
+        "uiDirectives": {
+          "type": "object",
+          "properties": {
+            "showProductionRates": { "type": "boolean" },
+            "showEfficiencyScores": { "type": "boolean", "description": "Display effective production per second for derivative generators." },
+            "liveSurroundings": { "type": "boolean", "description": "Hint to the UI to have active, animated elements." }
+          }
+        }
+      }
+    },
+    "coreLoop": {
+      "type": "object",
+      "properties": {
+        "primaryCurrency": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "string" },
+            "name": { "type": "string" },
+            "initialValue": { "type": "number" }
+          },
+          "required": ["id", "name", "initialValue"]
+        },
+        "manualClickValue": {
+          "type": "object",
+          "properties": {
+            "baseValue": { "type": "number" }
+          },
+          "required": ["baseValue"]
+        }
+      },
+      "required": ["primaryCurrency", "manualClickValue"]
+    },
+    "generators": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "baseCost": { "type": "number" },
+          "costScaling": { "type": "number", "description": "e.g., 1.15 for a 15% increase" },
+          "output": {
+            "type": "object",
+            "description": "Defines what this generator produces (currency or another generator for derivative growth).",
+            "properties": {
+              "type": { "type": "string", "enum": ["currency", "generator"] },
+              "targetId": { "type": "string" },
+              "baseRate": { "type": "number" }
+            },
+            "required": ["type", "targetId", "baseRate"]
+          },
+          "milestoneBonuses": {
+            "type": "array",
+            "description": "Implements 'Shifting Priorities'. Bonuses applied when a certain number of this generator is owned.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "level": { "type": "number" },
+                "effect": { "$ref": "#/definitions/effect" },
+                "lore": { "type": "string", "description": "Optional: A snippet of lore or narrative revealed at this milestone." }
+              },
+              "required": ["level", "effect"]
+            }
+          }
+        },
+        "required": ["id", "name", "baseCost", "costScaling", "output"]
+      }
+    },
+    "upgrades": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "cost": { "type": "number" },
+          "unlockConditions": { "$ref": "#/definitions/unlockConditions" },
+          "effect": { "$ref": "#/definitions/effect" }
+        },
+        "required": ["id", "name", "cost", "unlockConditions", "effect"]
+      }
+    },
+    "prestige": {
+      "type": "object",
+      "properties": {
+        "layers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "currencyName": { "type": "string" },
+              "unlockConditions": { "$ref": "#/definitions/unlockConditions" },
+              "formula": { "type": "string", "description": "e.g., 'floor(150 * cbrt(currency.insight / 1e9))'" },
+              "effect": { "$ref": "#/definitions/effect" },
+              "resetMechanics": {"type": "array", "items": {"type": "string", "enum": ["minigame", "challenge"]}, "description": "Optional mechanics triggered on prestige."}
+            },
+            "required": ["id", "currencyName", "unlockConditions", "formula", "effect"]
+          }
+        }
+      }
+    },
+    "paradigmShifts": {
+      "type": "array",
+      "description": "Major game-altering events that unfold the narrative and complexity.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "unlockConditions": { "$ref": "#/definitions/unlockConditions" },
+          "description": { "type": "string", "description": "Narrative text for when the shift occurs." },
+          "lore": { "type": "string", "description": "Optional: A deeper lore snippet or journal entry associated with this shift." },
+          "newMechanicsUnlocked": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["id", "unlockConditions", "description", "newMechanicsUnlocked"]
+      }
+    },
+    "researchTrees": {
+      "type": "array",
+      "description": "Defines branching specialization paths unlocked via prestige.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "currencyCostId": { "type": "string", "description": "ID of the currency used to purchase nodes (e.g., 'wisdom')." },
+          "nodes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "description": { "type": "string" },
+                "cost": { "type": "number" },
+                "unlockConditions": { "type": "array", "items": { "type": "string", "description": "IDs of nodes that must be unlocked first." } },
+                "effect": { "$ref": "#/definitions/effect" }
+              },
+              "required": ["id", "name", "cost", "effect"]
+            }
+          }
+        },
+        "required": ["id", "name", "currencyCostId", "nodes"]
+      }
+    },
+    "engagementHooks": {
+      "type": "object",
+      "properties": {
+        "offlineProgression": {
+          "type": "object",
+          "properties": {
+            "maxTimeSeconds": { "type": "number" },
+            "efficiency": { "type": "number", "description": "e.g., 0.9 for 90% of online rate" }
+          }
+        },
+        "randomRewards": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "type": { "type": "string", "enum": ["clickable"] },
+              "frequencySeconds": { "type": "number" },
+              "effect": { "$ref": "#/definitions/effect" }
+            },
+            "required": ["id", "type", "frequencySeconds", "effect"]
+          }
+        }
+      }
+    },
+    "monetization": {
+      "type": "object",
+      "description": "Defines Player-Friendly Design monetization strategies.",
+      "properties": {
+        "rewardedAds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" },
+              "cooldownSeconds": { "type": "number" },
+              "effect": { "$ref": "#/definitions/effect" }
+            },
+            "required": ["id", "name", "cooldownSeconds", "effect"]
+          }
+        }
+      }
+    }
+  },
+  "required": ["meta", "coreLoop", "generators"],
+  "definitions": {
+    "unlockConditions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string", "enum": ["generator_owned", "currency_owned", "upgrade_owned", "research_node_owned"] },
+          "targetId": { "type": "string" },
+          "value": { "type": "number" }
+        },
+        "required": ["type", "targetId", "value"]
+      }
+    },
+    "effect": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["multiplier", "additive_bonus"] },
+        "targetId": { "type": "string", "description": "ID of the generator, currency, or 'global' to affect." },
+        "targetProperty": {"type": "string", "enum": ["production", "clickValue"]},
+        "value": { "type": "number", "description": "e.g., 2 for a 2x multiplier or +10 additive bonus." },
+        "duration": { "type": "number", "description": "Optional: Duration in seconds for temporary effects." },
+        "formula": { "type": "string", "description": "Optional: A dynamic formula to calculate the value, e.g., '(currentInsight * 0.1) + (productionRate * 30)'." }
+      },
+      "required": ["type", "targetId", "value"]
+    }
+  }
+}

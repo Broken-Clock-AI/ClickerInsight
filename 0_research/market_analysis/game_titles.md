@@ -1,0 +1,96 @@
+# Master List of Idle, Clicker, and Incremental Games
+
+This list is a compilation of game titles extracted from various "best of" articles and videos as part of our market intelligence initiative.
+
+- (the) Gnorp Apologue
+- 10 Billion Wives
+- A Dark Room
+- Ad Fund
+- AdVenture Capitalist
+- AdVenture Communist
+- AFK Journey
+- Antimatter Dimensions
+- Ayrton Idle
+- Banana
+- Bitburner
+- Bongo Cat
+- Cats
+- Cauldron
+- Cell to Singularity
+- ChronoForge
+- Civ Idle
+- CivRise
+- Click Mage
+- Clicker Heroes
+- Clicker Kingdom
+- Clickpocalypse 2
+- Coin Factory
+- Cookie Clicker
+- Cult of the Yellow King
+- Cyber Rebellion
+- Cyber Shard Clicker
+- Deep Space Cash
+- Desktop Colony
+- Digseum
+- DodecaDragons
+- Dun Crush
+- Dungeon, Inc.
+- Egg Inc
+- Egg, Inc.
+- Exponential Idle
+- Factory Town Idle
+- Fallout Shelter
+- Farm RPG
+- Farmer Against Potatoes Idle
+- Fill Up The Hole
+- Griddle
+- Hamster
+- Hero Wars Alliance
+- Hotel Empire Tycoon
+- Idle Apocalypse
+- Idle Champions of the Forgotten Realms
+- Idle Colony
+- Idle Farming Empire
+- Idle Magic School
+- Idle Miner Tycoon
+- Idle Outpost
+- Idle Planet Miner
+- Idle Saga
+- Idle Slayer
+- Idle Space Energy Particle Simulator
+- Idle Weapon Shop
+- IdleOn The Idle Game MMO
+- Journey to Incrementalia
+- Kittens Game
+- Kiwi Clicker
+- Leaf Blower Revolution
+- Legend of Mushroom
+- Lumberjacked
+- Magic Archery
+- Melvor Idle
+- Microcivilization
+- Moose Miners
+- My Little Universe
+- NGU Idle
+- Nodebuster
+- Pokemon Sleep
+- PolyPine
+- Professional Gluteus Maximus Slapper
+- Realm Grinder
+- Rusty's Retirement
+- Sixty Four
+- Soda Dungeon 2
+- Spaceplan
+- Super Mining Mix
+- Tapple
+- The Farmer Was Replaced
+- The Legends of Dragia
+- Tower Walker: MMO Grind Simulator
+- Tower Wizard
+- Trimps
+- Ulala: Idle Adventure
+- Unnamed Space Idle
+- Universe Horizon
+- Universal Paperclips
+- What Lurks Below
+- Widget Inc

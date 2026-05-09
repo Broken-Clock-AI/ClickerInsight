@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Game Design Document",
+  "description": "Defines the core mechanics, balancing, and data for the incremental game.",
+  "type": "object",
+  "properties": {
+    "gameTitle": {
+      "type": "string"
+    },
+    "core": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "initialValue": { "type": "number" }
+          },
+          "required": ["name", "initialValue"]
+        },
+        "manualClickValue": {
+          "type": "number"
+        }
+      },
+      "required": ["currency", "manualClickValue"]
+    },
+    "generators": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "baseCost": { "type": "number" },
+          "costScaling": { "type": "number", "description": "e.g., 1.15 for a 15% increase per purchase" },
+          "baseProduction": { "type": "number" }
+        },
+        "required": ["id", "name", "baseCost", "costScaling", "baseProduction"]
+      }
+    },
+    "upgrades": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "cost": { "type": "number" },
+          "unlockCondition": {
+            "type": "object",
+            "properties": {
+              "type": { "type": "string", "enum": ["generator_level", "total_currency"] },
+              "targetId": { "type": "string" },
+              "value": { "type": "number" }
+            },
+            "required": ["type", "targetId", "value"]
+          },
+          "effect": {
+            "type": "object",
+            "properties": {
+              "type": { "type": "string", "enum": ["multiplier"] },
+              "targetId": { "type": "string", "description": "ID of the generator to affect, or 'global' for all" },
+              "value": { "type": "number", "description": "e.g., 2 for a 2x multiplier" }
+            },
+            "required": ["type", "targetId", "value"]
+          }
+        },
+        "required": ["id", "name", "cost", "unlockCondition", "effect"]
+      }
+    },
+    "prestige": {
+      "type": "object",
+      "properties": {
+        "currencyName": { "type": "string" },
+        "prestigeRequirement": { "type": "string", "description": "Formula or value needed to prestige" },
+        "formula": { "type": "string", "description": "e.g., floor(150 * sqrt(totalCurrency / 1e12))" },
+        "bonusPerPrestige": { "type": "number", "description": "e.g., 0.02 for a 2% bonus to production" }
+      },
+      "required": ["currencyName", "formula", "bonusPerPrestige"]
+    }
+  },
+  "required": ["gameTitle", "core", "generators", "upgrades", "prestige"]
+}

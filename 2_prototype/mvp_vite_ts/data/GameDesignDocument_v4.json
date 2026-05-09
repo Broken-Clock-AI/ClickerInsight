@@ -1,0 +1,445 @@
+{
+  "meta": {
+    "gameTitle": "The Compounding Illusion",
+    "gameVersion": "0.4.0"
+  },
+  "playerExperience": {
+    "numberFormatting": "scientific",
+    "uiDirectives": {
+      "showProductionRates": true,
+      "showEfficiencyScores": true,
+      "liveSurroundings": true
+    }
+  },
+  "coreLoop": {
+    "primaryCurrency": {
+      "id": "insight",
+      "name": "Insight",
+      "initialValue": 0
+    },
+    "manualClickValue": {
+      "baseValue": 1
+    }
+  },
+  "generators": [
+    {
+      "id": "gen01_thought",
+      "name": "Fleeting Thought",
+      "description": "Generates raw Insight by simply existing.",
+      "baseCost": 10,
+      "costScaling": 1.15,
+      "output": { "type": "currency", "targetId": "insight", "baseRate": 1 },
+      "milestoneBonuses": [
+        { "level": 10, "effect": { "type": "multiplier", "targetId": "gen01_thought", "targetProperty": "production", "value": 2 }, "lore": "Initial thoughts double, a cascade begins." },
+        { "level": 25, "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 1.1 } },
+        { "level": 50, "effect": { "type": "additive_bonus", "targetId": "gen01_thought", "targetProperty": "production", "value": 5 } }
+      ]
+    },
+    {
+      "id": "gen02_note",
+      "name": "Scribbled Note",
+      "description": "Captures fleeting thoughts, making them more tangible.",
+      "baseCost": 150,
+      "costScaling": 1.20,
+      "output": { "type": "currency", "targetId": "insight", "baseRate": 10 },
+      "milestoneBonuses": [
+        { "level": 10, "effect": { "type": "multiplier", "targetId": "gen02_note", "targetProperty": "production", "value": 2 } },
+        { "level": 25, "effect": { "type": "multiplier", "targetId": "gen01_thought", "targetProperty": "production", "value": 1.5 } },
+        { "level": 50, "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 1.25 }, "lore": "Notes begin to influence the very fabric of thought." }
+      ]
+    },
+    {
+      "id": "gen03_researcher",
+      "name": "Researcher",
+      "description": "A dedicated mind that continuously generates new scribbled notes.",
+      "baseCost": 2500,
+      "costScaling": 1.25,
+      "output": { "type": "generator", "targetId": "gen02_note", "baseRate": 0.5 },
+      "milestoneBonuses": [
+        { "level": 5, "effect": { "type": "multiplier", "targetId": "gen03_researcher", "targetProperty": "production", "value": 2 } },
+        { "level": 15, "effect": { "type": "multiplier", "targetId": "gen02_note", "targetProperty": "production", "value": 1.2 } },
+        { "level": 30, "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 1.5 }, "lore": "Early research finds its footing, connecting disparate ideas." }
+      ]
+    },
+    {
+      "id": "gen04_conceptual_model",
+      "name": "Conceptual Model",
+      "description": "Frameworks that produce more researchers and streamline thought.",
+      "baseCost": 30000,
+      "costScaling": 1.30,
+      "output": { "type": "generator", "targetId": "gen03_researcher", "baseRate": 0.2 },
+      "milestoneBonuses": [
+        { "level": 5, "effect": { "type": "multiplier", "targetId": "gen04_conceptual_model", "targetProperty": "production", "value": 2 } },
+        { "level": 10, "effect": { "type": "multiplier", "targetId": "gen01_thought", "targetProperty": "production", "value": 3 } },
+        { "level": 20, "effect": { "type": "multiplier", "targetId": "gen03_researcher", "targetProperty": "production", "value": 1.5 }, "lore": "Models simplify reality, making new insights possible." }
+      ]
+    },
+    {
+      "id": "gen05_peer_review",
+      "name": "Peer Review",
+      "description": "Refines models, significantly boosting their effectiveness.",
+      "baseCost": 350000,
+      "costScaling": 1.35,
+      "output": { "type": "generator", "targetId": "gen04_conceptual_model", "baseRate": 0.1 },
+      "milestoneBonuses": [
+        { "level": 3, "effect": { "type": "multiplier", "targetId": "gen05_peer_review", "targetProperty": "production", "value": 2 } },
+        { "level": 7, "effect": { "type": "multiplier", "targetId": "gen04_conceptual_model", "targetProperty": "production", "value": 1.8 } },
+        { "level": 15, "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 1.75 }, "lore": "The scrutiny of peers hones the sharpness of your models." }
+      ]
+    },
+    {
+      "id": "gen06_published_paper",
+      "name": "Published Paper",
+      "description": "Formalizes research, creating more peer reviews and accelerating the flow of ideas.",
+      "baseCost": 4000000,
+      "costScaling": 1.40,
+      "output": { "type": "generator", "targetId": "gen05_peer_review", "baseRate": 0.08 },
+      "milestoneBonuses": [
+        { "level": 2, "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 2.5 } },
+        { "level": 5, "effect": { "type": "multiplier", "targetId": "gen05_peer_review", "targetProperty": "production", "value": 1.5 } },
+        { "level": 10, "effect": { "type": "additive_bonus", "targetId": "gen06_published_paper", "targetProperty": "production", "value": 100000 }, "lore": "Each publication lays a new brick in the edifice of understanding." }
+      ]
+    },
+    {
+      "id": "gen07_academic_conference",
+      "name": "Academic Conference",
+      "description": "Spreads knowledge, creating more published papers and boosting global insight.",
+      "baseCost": 50000000,
+      "costScaling": 1.45,
+      "output": { "type": "generator", "targetId": "gen06_published_paper", "baseRate": 0.05 },
+      "milestoneBonuses": [
+        { "level": 1, "effect": { "type": "multiplier", "targetId": "gen07_academic_conference", "targetProperty": "production", "value": 3 } },
+        { "level": 3, "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 1.8 } },
+        { "level": 7, "effect": { "type": "additive_bonus", "targetId": "gen06_published_paper", "targetProperty": "production", "value": 500000 }, "lore": "The cross-pollination of ideas at conferences sparks new growth." }
+      ]
+    },
+    {
+      "id": "gen08_global_collaboration",
+      "name": "Global Collaboration",
+      "description": "Unites minds worldwide, exponentially increasing the output of academic conferences.",
+      "baseCost": 600000000,
+      "costScaling": 1.50,
+      "output": { "type": "generator", "targetId": "gen07_academic_conference", "baseRate": 0.01 },
+      "milestoneBonuses": [
+        { "level": 1, "effect": { "type": "multiplier", "targetId": "gen08_global_collaboration", "targetProperty": "production", "value": 4 } },
+        { "level": 2, "effect": { "type": "multiplier", "targetId": "gen07_academic_conference", "targetProperty": "production", "value": 2 } },
+        { "level": 4, "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 2.5 }, "lore": "Humanity's collective intellect surges forward in unison." }
+      ]
+    },
+    {
+      "id": "gen09_paradigm_shift",
+      "name": "Paradigm Shift Generator",
+      "description": "A fundamental re-framing of reality, massively boosting all forms of insight generation.",
+      "baseCost": 7500000000,
+      "costScaling": 1.55,
+      "output": { "type": "currency", "targetId": "insight", "baseRate": 10000000 },
+      "milestoneBonuses": [
+        { "level": 1, "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 5 } },
+        { "level": 2, "effect": { "type": "multiplier", "targetId": "gen08_global_collaboration", "targetProperty": "production", "value": 3 } },
+        { "level": 3, "effect": { "type": "additive_bonus", "targetId": "gen09_paradigm_shift", "targetProperty": "production", "value": 50000000 }, "lore": "The world looks different now, seen through a new lens." }
+      ]
+    },
+    {
+      "id": "gen10_universal_understanding",
+      "name": "Universal Understanding",
+      "description": "The ultimate state of knowledge, transcending all previous forms of insight.",
+      "baseCost": 100000000000,
+      "costScaling": 1.50,
+      "output": { "type": "currency", "targetId": "insight", "baseRate": 100000000 },
+      "milestoneBonuses": [
+        { "level": 1, "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 10 } },
+        { "level": 2, "effect": { "type": "multiplier", "targetId": "gen09_paradigm_shift", "targetProperty": "production", "value": 5 } },
+        { "level": 3, "effect": { "type": "additive_bonus", "targetId": "gen10_universal_understanding", "targetProperty": "production", "value": 1000000000 }, "lore": "The universe itself whispers its secrets." }
+      ]
+    }
+  ],
+  "upgrades": [
+    {
+      "id": "upg01_focused_attention",
+      "name": "Focused Attention",
+      "description": "Doubles the output of Fleeting Thoughts.",
+      "cost": 100,
+      "unlockConditions": [ { "type": "generator_owned", "targetId": "gen01_thought", "value": 10 } ],
+      "effect": { "type": "multiplier", "targetId": "gen01_thought", "targetProperty": "production", "value": 2 }
+    },
+    {
+      "id": "upg02_organized_notes",
+      "name": "Organized Notes",
+      "description": "Scribbled Notes are twice as effective.",
+      "cost": 1200,
+      "unlockConditions": [ { "type": "generator_owned", "targetId": "gen02_note", "value": 5 } ],
+      "effect": { "type": "multiplier", "targetId": "gen02_note", "targetProperty": "production", "value": 2 }
+    },
+    {
+      "id": "upg03_dedicated_research",
+      "name": "Dedicated Research",
+      "description": "Researchers are 2.5x more productive.",
+      "cost": 15000,
+      "unlockConditions": [ { "type": "generator_owned", "targetId": "gen03_researcher", "value": 5 } ],
+      "effect": { "type": "multiplier", "targetId": "gen03_researcher", "targetProperty": "production", "value": 2.5 }
+    },
+    {
+      "id": "upg04_interdisciplinary_approach",
+      "name": "Interdisciplinary Approach",
+      "description": "Boosts Fleeting Thoughts and Scribbled Notes by 50% globally.",
+      "cost": 25000,
+      "unlockConditions": [ { "type": "generator_owned", "targetId": "gen03_researcher", "value": 10 } ],
+      "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 1.5 } 
+    },
+    {
+      "id": "upg05_model_refinement",
+      "name": "Model Refinement",
+      "description": "Conceptual Models become 2x more efficient.",
+      "cost": 100000,
+      "unlockConditions": [ { "type": "generator_owned", "targetId": "gen04_conceptual_model", "value": 5 } ],
+      "effect": { "type": "multiplier", "targetId": "gen04_conceptual_model", "targetProperty": "production", "value": 2 }
+    },
+    {
+      "id": "upg06_critical_thinking",
+      "name": "Critical Thinking",
+      "description": "Peer Reviews become 2.5x more potent.",
+      "cost": 500000,
+      "unlockConditions": [ { "type": "generator_owned", "targetId": "gen05_peer_review", "value": 3 } ],
+      "effect": { "type": "multiplier", "targetId": "gen05_peer_review", "targetProperty": "production", "value": 2.5 }
+    },
+    {
+      "id": "upg07_publishing_pipeline",
+      "name": "Publishing Pipeline",
+      "description": "Doubles the raw Insight from Published Papers.",
+      "cost": 3000000,
+      "unlockConditions": [ { "type": "generator_owned", "targetId": "gen06_published_paper", "value": 2 } ],
+      "effect": { "type": "multiplier", "targetId": "gen06_published_paper", "targetProperty": "production", "value": 2 }
+    },
+    {
+      "id": "upg08_conference_synergy",
+      "name": "Conference Synergy",
+      "description": "Academic Conferences are 3x more effective.",
+      "cost": 20000000,
+      "unlockConditions": [ { "type": "generator_owned", "targetId": "gen07_academic_conference", "value": 1 } ],
+      "effect": { "type": "multiplier", "targetId": "gen07_academic_conference", "targetProperty": "production", "value": 3 }
+    },
+    {
+      "id": "upg09_global_network",
+      "name": "Global Network",
+      "description": "Global Collaboration becomes 2x more impactful.",
+      "cost": 150000000,
+      "unlockConditions": [ { "type": "generator_owned", "targetId": "gen08_global_collaboration", "value": 1 } ],
+      "effect": { "type": "multiplier", "targetId": "gen08_global_collaboration", "targetProperty": "production", "value": 2 }
+    },
+    {
+      "id": "upg10_grand_synthesis",
+      "name": "Grand Synthesis",
+      "description": "A global multiplier of 1.75x to all Insight production.",
+      "cost": 500000000,
+      "unlockConditions": [ { "type": "generator_owned", "targetId": "gen08_global_collaboration", "value": 2 } ],
+      "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 1.75 }
+    },
+    {
+      "id": "upg11_universal_principles",
+      "name": "Universal Principles",
+      "description": "Unlocks the ability to achieve Paradigm Shifts 2x faster.",
+      "cost": 1000000000,
+      "unlockConditions": [ { "type": "generator_owned", "targetId": "gen09_paradigm_shift", "value": 1 } ],
+      "effect": { "type": "multiplier", "targetId": "gen09_paradigm_shift", "targetProperty": "production", "value": 2 }
+    },
+    {
+      "id": "upg12_cosmic_insight",
+      "name": "Cosmic Insight",
+      "description": "Universal Understanding generators are now 2x more potent.",
+      "cost": 5000000000,
+      "unlockConditions": [ { "type": "generator_owned", "targetId": "gen10_universal_understanding", "value": 1 } ],
+      "effect": { "type": "multiplier", "targetId": "gen10_universal_understanding", "targetProperty": "production", "value": 2 }
+    },
+    {
+      "id": "upg13_accelerated_thought",
+      "name": "Accelerated Thought",
+      "description": "Further doubles Fleeting Thought output.",
+      "cost": 50000,
+      "unlockConditions": [ { "type": "upgrade_owned", "targetId": "upg01_focused_attention", "value": 1 } ],
+      "effect": { "type": "multiplier", "targetId": "gen01_thought", "targetProperty": "production", "value": 2 }
+    },
+    {
+      "id": "upg14_enhanced_recall",
+      "name": "Enhanced Recall",
+      "description": "Scribbled Notes are 1.5x more productive.",
+      "cost": 250000,
+      "unlockConditions": [ { "type": "upgrade_owned", "targetId": "upg02_organized_notes", "value": 1 } ],
+      "effect": { "type": "multiplier", "targetId": "gen02_note", "targetProperty": "production", "value": 1.5 }
+    },
+    {
+      "id": "upg15_deep_dive",
+      "name": "Deep Dive Research",
+      "description": "Researchers gain a 1.75x bonus to their output.",
+      "cost": 1000000,
+      "unlockConditions": [ { "type": "upgrade_owned", "targetId": "upg03_dedicated_research", "value": 1 } ],
+      "effect": { "type": "multiplier", "targetId": "gen03_researcher", "targetProperty": "production", "value": 1.75 }
+    },
+    {
+      "id": "upg16_holistic_models",
+      "name": "Holistic Models",
+      "description": "Conceptual Models become 1.8x more efficient.",
+      "cost": 7500000,
+      "unlockConditions": [ { "type": "upgrade_owned", "targetId": "upg05_model_refinement", "value": 1 } ],
+      "effect": { "type": "multiplier", "targetId": "gen04_conceptual_model", "targetProperty": "production", "value": 1.8 }
+    },
+    {
+      "id": "upg17_rigorous_peer_review",
+      "name": "Rigorous Peer Review",
+      "description": "Peer Reviews are 2x stronger.",
+      "cost": 50000000,
+      "unlockConditions": [ { "type": "upgrade_owned", "targetId": "upg06_critical_thinking", "value": 1 } ],
+      "effect": { "type": "multiplier", "targetId": "gen05_peer_review", "targetProperty": "production", "value": 2 }
+    },
+    {
+      "id": "upg18_open_access_publishing",
+      "name": "Open Access Publishing",
+      "description": "Published Papers yield 1.25x more raw Insight.",
+      "cost": 300000000,
+      "unlockConditions": [ { "type": "upgrade_owned", "targetId": "upg07_publishing_pipeline", "value": 1 } ],
+      "effect": { "type": "multiplier", "targetId": "gen06_published_paper", "targetProperty": "production", "value": 1.25 }
+    },
+    {
+      "id": "upg19_global_academic_forum",
+      "name": "Global Academic Forum",
+      "description": "Academic Conferences are 1.5x more effective.",
+      "cost": 2500000000,
+      "unlockConditions": [ { "type": "upgrade_owned", "targetId": "upg08_conference_synergy", "value": 1 } ],
+      "effect": { "type": "multiplier", "targetId": "gen07_academic_conference", "targetProperty": "production", "value": 1.5 }
+    },
+    {
+      "id": "upg20_collective_consciousness",
+      "name": "Collective Consciousness",
+      "description": "A monumental global multiplier of 2x to all Insight production.",
+      "cost": 15000000000,
+      "unlockConditions": [ { "type": "upgrade_owned", "targetId": "upg10_grand_synthesis", "value": 1 } ],
+      "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 2 }
+    }
+  ],
+  "prestige": {
+    "layers": [
+      {
+        "id": "prestige01_wisdom",
+        "currencyName": "Wisdom",
+        "unlockConditions": [ { "type": "currency_owned", "targetId": "insight", "value": 1000000000000 } ],
+        "formula": "floor(5 * cbrt(currency.insight / 1e12))",
+        "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 1.15 },
+        "resetMechanics": ["minigame"]
+      }
+    ]
+  },
+  "paradigmShifts": [
+    {
+      "id": "shift01_unlock_prestige",
+      "unlockConditions": [ { "type": "currency_owned", "targetId": "insight", "value": 500000000 } ],
+      "description": "The sheer volume of your insights has led to a breakthrough! You can now consolidate your knowledge into profound Wisdom, starting anew with a permanent boost to all future Insight generation.",
+      "lore": "The first whispers of a deeper reality, a cycle of revelation.",
+      "newMechanicsUnlocked": ["prestige", "research_trees"]
+    },
+    {
+      "id": "shift02_unlock_gen09",
+      "unlockConditions": [ { "type": "generator_owned", "targetId": "gen08_global_collaboration", "value": 5 } ],
+      "description": "Your global network has reached a critical mass, enabling a true Paradigm Shift. A new era of understanding begins!",
+      "lore": "Boundaries dissolve as collective thought gives way to new frameworks.",
+      "newMechanicsUnlocked": ["gen09_paradigm_shift"]
+    },
+    {
+      "id": "shift03_unlock_gen10",
+      "unlockConditions": [ { "type": "generator_owned", "targetId": "gen09_paradigm_shift", "value": 2 } ],
+      "description": "You are on the verge of Universal Understanding. All previous knowledge coalesces into a singular, profound truth.",
+      "lore": "The universe itself whispers its secrets, a symphony of interconnected knowledge.",
+      "newMechanicsUnlocked": ["gen10_universal_understanding"]
+    }
+  ],
+  "researchTrees": [
+    {
+      "id": "tree01_cognitive_efficiency",
+      "name": "Cognitive Efficiency",
+      "description": "Focuses on optimizing early-game thought and note production.",
+      "currencyCostId": "wisdom",
+      "nodes": [
+        {
+          "id": "node_focus_thought",
+          "name": "Hyper-Focused Thought",
+          "description": "Doubles the output of Fleeting Thoughts permanently.",
+          "cost": 1,
+          "effect": { "type": "multiplier", "targetId": "gen01_thought", "targetProperty": "production", "value": 2 }
+        },
+        {
+          "id": "node_organized_mind",
+          "name": "Organized Mind",
+          "description": "Scribbled Notes are 2x more effective. Requires Hyper-Focused Thought.",
+          "cost": 2,
+          "unlockConditions": ["node_focus_thought"],
+          "effect": { "type": "multiplier", "targetId": "gen02_note", "targetProperty": "production", "value": 2 }
+        }
+      ]
+    },
+    {
+      "id": "tree02_scholarly_influence",
+      "name": "Scholarly Influence",
+      "description": "Enhances the impact and reach of advanced research and collaboration.",
+      "currencyCostId": "wisdom",
+      "nodes": [
+        {
+          "id": "node_publish_power",
+          "name": "Accelerated Publishing",
+          "description": "Published Papers produce 1.5x more Peer Reviews. Requires 1 Wisdom.",
+          "cost": 1,
+          "effect": { "type": "multiplier", "targetId": "gen06_published_paper", "targetProperty": "production", "value": 1.5 }
+        },
+        {
+          "id": "node_global_reach",
+          "name": "Global Reach",
+          "description": "Global Collaboration is 2x more effective. Requires Accelerated Publishing.",
+          "cost": 3,
+          "unlockConditions": ["node_publish_power"],
+          "effect": { "type": "multiplier", "targetId": "gen08_global_collaboration", "targetProperty": "production", "value": 2 }
+        }
+      ]
+    }
+  ],
+  "engagementHooks": {
+    "offlineProgression": {
+      "maxTimeSeconds": 28800,
+      "efficiency": 0.95
+    },
+    "randomRewards": [
+      {
+        "id": "rand01_epiphany",
+        "type": "clickable",
+        "frequencySeconds": 180,
+        "effect": { "type": "additive_bonus", "targetId": "insight", "value": 0, "formula": "(currentInsight * 0.05) + (productionRate * 60)" }
+      },
+      {
+        "id": "rand02_eureka",
+        "type": "clickable",
+        "frequencySeconds": 900,
+        "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 5, "duration": 600 }
+      },
+      {
+        "id": "rand03_serendipity",
+        "type": "clickable",
+        "frequencySeconds": 600,
+        "effect": { "type": "additive_bonus", "targetId": "insight", "value": 0, "formula": "productionRate * 300" },
+        "lore": "A lucky break in the data, a sudden unexpected connection."
+      }
+    ]
+  },
+  "monetization": {
+    "rewardedAds": [
+      {
+        "id": "rad01_boost",
+        "name": "Watch Ad for 2x Boost (1 hour)",
+        "cooldownSeconds": 3600,
+        "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 2, "duration": 3600 }
+      },
+      {
+        "id": "rad02_time_skip",
+        "name": "Watch Ad for 15 Min Time Skip",
+        "cooldownSeconds": 1800,
+        "effect": { "type": "additive_bonus", "targetId": "insight", "value": 0, "formula": "productionRate * 900" },
+        "lore": "Accelerate time itself, fast-forwarding your research!"
+      }
+    ]
+  }
+}

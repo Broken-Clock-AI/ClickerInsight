@@ -1,0 +1,51 @@
+{
+  "currencyName": "Knowledge",
+  "baseClickPower": 1,
+  "generators": [
+    {
+      "id": "gen_intern",
+      "name": "Intern",
+      "description": "Underpaid but enthusiastic.",
+      "baseCost": 15,
+      "baseProduction": 0.1,
+      "costMultiplier": 1.15
+    },
+    {
+      "id": "gen_researcher",
+      "name": "Junior Researcher",
+      "description": "Knows how to use a spreadsheet.",
+      "baseCost": 100,
+      "baseProduction": 1,
+      "costMultiplier": 1.15
+    },
+    {
+      "id": "gen_server",
+      "name": "Server Node",
+      "description": "Beeping away in a closet.",
+      "baseCost": 1100,
+      "baseProduction": 8,
+      "costMultiplier": 1.15
+    },
+    {
+      "id": "gen_lab",
+      "name": "Research Lab",
+      "description": "A dedicated facility for thinking.",
+      "baseCost": 12000,
+      "baseProduction": 47,
+      "costMultiplier": 1.15
+    },
+    {
+      "id": "gen_ai",
+      "name": "AI Core",
+      "description": "Does the thinking for you.",
+      "baseCost": 130000,
+      "baseProduction": 260,
+      "costMultiplier": 1.15
+    }
+  ],
+  "prestige": {
+    "currencyName": "Insight",
+    "baseRequirement": 1000000,
+    "exponent": 0.5
+  }
+}

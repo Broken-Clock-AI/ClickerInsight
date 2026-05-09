@@ -1,0 +1,118 @@
+{
+  "meta": {
+    "gameTitle": "The Compounding Illusion",
+    "gameVersion": "0.1.0"
+  },
+  "playerExperience": {
+    "numberFormatting": "scientific",
+    "uiDirectives": {
+      "showProductionRates": true,
+      "showEfficiencyScores": false,
+      "liveSurroundings": true
+    }
+  },
+  "coreLoop": {
+    "primaryCurrency": {
+      "id": "insight",
+      "name": "Insight",
+      "initialValue": 0
+    },
+    "manualClickValue": {
+      "baseValue": 1
+    }
+  },
+  "generators": [
+    {
+      "id": "gen01_thought",
+      "name": "Fleeting Thought",
+      "description": "Generates raw Insight by thinking.",
+      "baseCost": 10,
+      "costScaling": 1.15,
+      "output": { "type": "currency", "targetId": "insight", "baseRate": 1 },
+      "milestoneBonuses": [
+        { "level": 25, "effect": { "type": "multiplier", "targetId": "gen01_thought", "targetProperty": "production", "value": 2 } }
+      ]
+    },
+    {
+      "id": "gen02_note",
+      "name": "Scribbled Note",
+      "description": "Captures thoughts, producing more Insight.",
+      "baseCost": 150,
+      "costScaling": 1.20,
+      "output": { "type": "currency", "targetId": "insight", "baseRate": 10 },
+      "milestoneBonuses": [
+         { "level": 25, "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 1.5 } }
+      ]
+    },
+    {
+      "id": "gen03_researcher",
+      "name": "Researcher",
+      "description": "A dedicated researcher who automatically scribbles notes.",
+      "baseCost": 2500,
+      "costScaling": 1.25,
+      "output": { "type": "generator", "targetId": "gen02_note", "baseRate": 0.5 },
+      "milestoneBonuses": []
+    }
+  ],
+  "upgrades": [
+    {
+      "id": "upg01_clarity",
+      "name": "Clarity of Thought",
+      "description": "Doubles the output of all Fleeting Thoughts.",
+      "cost": 100,
+      "unlockConditions": [ { "type": "generator_owned", "targetId": "gen01_thought", "value": 10 } ],
+      "effect": { "type": "multiplier", "targetId": "gen01_thought", "targetProperty": "production", "value": 2 }
+    },
+    {
+      "id": "upg02_better_pen",
+      "name": "A Better Pen",
+      "description": "Scribbled Notes are twice as effective.",
+      "cost": 1200,
+      "unlockConditions": [ { "type": "generator_owned", "targetId": "gen02_note", "value": 5 } ],
+      "effect": { "type": "multiplier", "targetId": "gen02_note", "targetProperty": "production", "value": 2 }
+    }
+  ],
+  "prestige": {
+    "layers": [
+      {
+        "id": "prestige01_wisdom",
+        "currencyName": "Wisdom",
+        "unlockConditions": [ { "type": "currency_owned", "targetId": "insight", "value": 1000000 } ],
+        "formula": "floor(2 * cbrt(currency.insight / 1e6))",
+        "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 1.5 }
+      }
+    ]
+  },
+  "paradigmShifts": [
+    {
+      "id": "shift01_unlock_prestige",
+      "unlockConditions": [ { "type": "currency_owned", "targetId": "insight", "value": 500000 } ],
+      "description": "The sheer volume of your insights has led to a breakthrough! You can now consolidate your knowledge into profound Wisdom, starting anew with a permanent boost to all future Insight generation.",
+      "newMechanicsUnlocked": ["prestige"]
+    }
+  ],
+  "engagementHooks": {
+    "offlineProgression": {
+      "maxTimeSeconds": 14400,
+      "efficiency": 0.9
+    },
+    "randomRewards": [
+      {
+        "id": "rand01_epiphany",
+        "type": "clickable",
+        "frequencySeconds": 300,
+        "effect": { "type": "additive_bonus", "targetId": "insight", "value": 0, "formula": "(currentInsight * 0.1) + (productionRate * 30)" }
+      }
+    ]
+  },
+  "monetization": {
+    "rewardedAds": [
+      {
+        "id": "rad01_boost",
+        "name": "Watch Ad for 2x Boost",
+        "cooldownSeconds": 3600,
+        "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 2, "duration": 3600 }
+      }
+    ]
+  }
+}
