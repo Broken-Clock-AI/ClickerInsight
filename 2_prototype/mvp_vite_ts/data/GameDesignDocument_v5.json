@@ -1,0 +1,172 @@
+{
+  "meta": {
+    "gameTitle": "The Compounding Illusion: Hardened",
+    "gameVersion": "0.5.0",
+    "rkaVersion": "2.1"
+  },
+  "playerExperience": {
+    "numberFormatting": "scientific",
+    "uiDirectives": {
+      "showProductionRates": true,
+      "showEfficiencyScores": true,
+      "liveSurroundings": true
+    },
+    "immersionMode": "machinic",
+    "claimId": "SCHMALZER-2019-01"
+  },
+  "coreLoop": {
+    "primaryCurrency": {
+      "id": "insight",
+      "name": "Insight",
+      "initialValue": 0
+    },
+    "manualClickValue": {
+      "baseValue": 1
+    }
+  },
+  "generators": [
+    {
+      "id": "gen01_thought",
+      "name": "Fleeting Thought",
+      "description": "Generates raw Insight by simply existing.",
+      "nodeType": "source",
+      "baseCost": 10,
+      "costScaling": 1.15,
+      "output": { "type": "currency", "targetId": "insight", "baseRate": 1 },
+      "milestoneBonuses": [
+        { "level": 10, "effect": { "type": "multiplier", "targetId": "gen01_thought", "targetProperty": "production", "value": 2 }, "lore": "Initial thoughts double, a cascade begins." },
+        { "level": 25, "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 1.1 } },
+        { "level": 50, "effect": { "type": "additive_bonus", "targetId": "gen01_thought", "targetProperty": "production", "value": 5 } }
+      ],
+      "claimId": "DEMAINE-2018-01"
+    },
+    {
+      "id": "gen02_note",
+      "name": "Scribbled Note",
+      "description": "Captures fleeting thoughts, making them more tangible.",
+      "nodeType": "source",
+      "baseCost": 150,
+      "costScaling": 1.15,
+      "output": { "type": "currency", "targetId": "insight", "baseRate": 10 },
+      "milestoneBonuses": [
+        { "level": 10, "effect": { "type": "multiplier", "targetId": "gen02_note", "targetProperty": "production", "value": 2 } },
+        { "level": 25, "effect": { "type": "multiplier", "targetId": "gen01_thought", "targetProperty": "production", "value": 1.5 } },
+        { "level": 50, "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 1.25 }, "lore": "Notes begin to influence the very fabric of thought." }
+      ],
+      "claimId": "GEEVO-2026-01"
+    },
+    {
+      "id": "gen03_researcher",
+      "name": "Researcher",
+      "description": "A dedicated mind that continuously generates new scribbled notes.",
+      "nodeType": "converter",
+      "baseCost": 2500,
+      "costScaling": 1.15,
+      "output": { "type": "generator", "targetId": "gen02_note", "baseRate": 0.5 },
+      "milestoneBonuses": [
+        { "level": 5, "effect": { "type": "multiplier", "targetId": "gen03_researcher", "targetProperty": "production", "value": 2 } },
+        { "level": 15, "effect": { "type": "multiplier", "targetId": "gen02_note", "targetProperty": "production", "value": 1.2 } },
+        { "level": 30, "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 1.5 }, "lore": "Early research finds its footing, connecting disparate ideas." }
+      ],
+      "claimId": "ALHARTHI-2017-04"
+    },
+    {
+      "id": "gen04_conceptual_model",
+      "name": "Conceptual Model",
+      "description": "Frameworks that produce more researchers and streamline thought.",
+      "nodeType": "converter",
+      "baseCost": 30000,
+      "costScaling": 1.15,
+      "output": { "type": "generator", "targetId": "gen03_researcher", "baseRate": 0.2 },
+      "milestoneBonuses": [
+        { "level": 5, "effect": { "type": "multiplier", "targetId": "gen04_conceptual_model", "targetProperty": "production", "value": 2 } },
+        { "level": 10, "effect": { "type": "multiplier", "targetId": "gen01_thought", "targetProperty": "production", "value": 3 } },
+        { "level": 20, "effect": { "type": "multiplier", "targetId": "gen03_researcher", "targetProperty": "production", "value": 1.5 }, "lore": "Models simplify reality, making new insights possible." }
+      ],
+      "claimId": "ALHARTHI-2018-08"
+    },
+    {
+      "id": "gen05_peer_review",
+      "name": "Peer Review",
+      "description": "Refines models, significantly boosting their effectiveness.",
+      "nodeType": "converter",
+      "baseCost": 350000,
+      "costScaling": 1.15,
+      "output": { "type": "generator", "targetId": "gen04_conceptual_model", "baseRate": 0.1 },
+      "milestoneBonuses": [
+        { "level": 3, "effect": { "type": "multiplier", "targetId": "gen05_peer_review", "targetProperty": "production", "value": 2 } },
+        { "level": 7, "effect": { "type": "multiplier", "targetId": "gen04_conceptual_model", "targetProperty": "production", "value": 1.8 } },
+        { "level": 15, "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 1.75 }, "lore": "The scrutiny of peers hones the sharpness of your models." }
+      ],
+      "claimId": "CUTTING-2018-05"
+    }
+  ],
+  "upgrades": [
+    {
+      "id": "upg01_focused_attention",
+      "name": "Focused Attention",
+      "description": "Doubles the output of Fleeting Thoughts.",
+      "cost": 100,
+      "unlockConditions": [ { "type": "generator_owned", "targetId": "gen01_thought", "value": 10 } ],
+      "effect": { "type": "multiplier", "targetId": "gen01_thought", "targetProperty": "production", "value": 2 },
+      "claimId": "FIZEK-2018-06"
+    },
+    {
+      "id": "upg02_organized_notes",
+      "name": "Organized Notes",
+      "description": "Scribbled Notes are twice as effective.",
+      "cost": 1200,
+      "unlockConditions": [ { "type": "generator_owned", "targetId": "gen02_note", "value": 5 } ],
+      "effect": { "type": "multiplier", "targetId": "gen02_note", "targetProperty": "production", "value": 2 },
+      "claimId": "ALHARTHI-2017-02"
+    }
+  ],
+  "prestige": {
+    "layers": [
+      {
+        "id": "prestige01_wisdom",
+        "currencyName": "Wisdom",
+        "unlockConditions": [ { "type": "currency_owned", "targetId": "insight", "value": 1000000000000 } ],
+        "formula": "floor(5 * cbrt(currency.insight / 1e12))",
+        "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 1.15 },
+        "resetMechanics": ["minigame"]
+      }
+    ],
+    "claimId": "ALHARTHI-2018-07"
+  },
+  "paradigmShifts": [
+    {
+      "id": "shift01_unlock_prestige",
+      "unlockConditions": [ { "type": "currency_owned", "targetId": "insight", "value": 500000000 } ],
+      "description": "The sheer volume of your insights has led to a breakthrough! You can now consolidate your knowledge into profound Wisdom.",
+      "lore": "The first whispers of a deeper reality, a cycle of revelation.",
+      "newMechanicsUnlocked": ["prestige", "research_trees"]
+    }
+  ],
+  "engagementHooks": {
+    "offlineProgression": {
+      "maxTimeSeconds": 28800,
+      "efficiency": 0.95
+    },
+    "randomRewards": [
+      {
+        "id": "rand01_epiphany",
+        "type": "clickable",
+        "frequencySeconds": 180,
+        "effect": { "type": "additive_bonus", "targetId": "insight", "value": 0, "formula": "(currentInsight * 0.05) + (productionRate * 60)" }
+      }
+    ],
+    "claimId": "CUTTING-2018-06"
+  },
+  "monetization": {
+    "rewardedAds": [
+      {
+        "id": "rad01_boost",
+        "name": "Watch Ad for 2x Boost (1 hour)",
+        "cooldownSeconds": 3600,
+        "effect": { "type": "multiplier", "targetId": "global", "targetProperty": "production", "value": 2, "duration": 3600 }
+      }
+    ],
+    "claimId": "APPODEAL-2025-01"
+  }
+}

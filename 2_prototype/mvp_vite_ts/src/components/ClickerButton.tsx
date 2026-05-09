@@ -70,7 +70,7 @@ export const ClickerButton = ({ onClick, amount }: ClickerButtonProps) => {
                         Research
                     </span>
                     <span className="text-sm font-mono text-emerald-200 opacity-80 mt-1">
-                        +{amount.toString()} Knowledge
+                        +{amount.lt(1000) ? amount.toString() : amount.toExponential(2).replace('+', '')} Insight
                     </span>
                 </div>
 

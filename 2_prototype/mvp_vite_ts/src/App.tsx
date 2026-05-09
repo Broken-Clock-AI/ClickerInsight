@@ -5,7 +5,7 @@ import { GeneratorList } from './components/GeneratorList';
 import { ClickerButton } from './components/ClickerButton';
 // @ts-ignore
 import Decimal from "break_infinity.js";
-import GameData from './data/GameDesignDocument.json';
+import GameData from './data/GameDesignDocument_v5.json';
 import './App.css';
 
 function App() {
@@ -25,9 +25,9 @@ function App() {
 
         {/* Header / Resource Display - DOMINANT */}
         <header className="flex flex-col items-center justify-center pt-8 pb-4">
-          <CurrencyDisplay amount={currency} label={GameData.currencyName} />
+          <CurrencyDisplay amount={currency} label={GameData.coreLoop.primaryCurrency.name} />
           <div className="text-slate-500 text-sm mt-2 tracking-widest uppercase opacity-60">
-            System Online
+            Hardened Knowledge Architecture v2.1
           </div>
         </header>
 
@@ -38,7 +38,7 @@ function App() {
           <div className="flex flex-col items-center justify-center p-8 h-full">
             <ClickerButton
               onClick={click}
-              amount={new Decimal(GameData.baseClickPower)}
+              amount={new Decimal(GameData.coreLoop.manualClickValue.baseValue)}
             />
           </div>
 
