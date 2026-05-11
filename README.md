@@ -37,11 +37,19 @@ We didn't just read papers; we looked at the players.
 
 ---
 
-## 🧠 Phase 1: The Synthesis (Recursive Knowledge Architecture)
+### 🧠 Phase 1: The Synthesis (Recursive Knowledge Architecture)
 
 Synthesis is the "Compile" step of our research. We don't just summarize; we architect.
 
-### The 13-Chapter Tome: "The Compounding Illusion"
+#### The Atomization Process (Semantic Pipeline)
+To ensure zero content loss and high technical precision, every research article undergoes **Atomization**.
+1.  **Retrieval:** The research corpus (PDFs/HTML) is converted to clean Markdown.
+2.  **Agent-Based RAG (Retrieval-Augmented Generation):** Our AI agents utilize a specialized RAG workflow to "ingest" these documents, identifying core mechanics, mathematical formulas, and psychological claims.
+3.  **Atomic Claim Extraction:** Each insight is deconstructed into a **YAML Claim Schema**.
+    *   *Example:* A claim about "Interpassivity" from Fizek (2018) is assigned a unique ID (`FIZEK-2018-04`), mapped to its domain (System/UX), and given a confidence score.
+4.  **Indexing:** These claims are then indexed in the `hfs_global_matrices.md`, creating a searchable "truth registry" for the game engine.
+
+#### The 13-Chapter Tome: "The Compounding Illusion"
 The culmination of our research is a **30,000+ word formal design tome**. It serves as the philosophical and technical manual for the prototype.
 - **The "Core Seesaw":** A framework for balancing active input vs. passive automation.
 - **Thematic Logic:** Chapters cover everything from *Narrative Through Abstraction* to *The Player as Planner*.
