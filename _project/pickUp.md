@@ -1,20 +1,21 @@
-# Session Handover Checkpoint (HFS v2.1 - Phase 1-3 COMPLETE)
+# Session Handover Checkpoint (HFS v2.2 - Agent-Ready Pivot)
 
 ## **Strategic Status**
-We have successfully completed the **Recursive Knowledge Architecture (RKA)** synthesis. The environment is now fully hardened with 48 atomic claims, a comprehensive Math Ledger, and a resolved Synthesis Report spanning 8 years of research (2018-2026).
+We have successfully completed the integration of **RKA v2.1** into the Vite/TypeScript prototype. However, a critical structural audit has identified "fuzzy logic" risks in our GDD schema (v5). We are now transitioning to **HFS v2.2**, focused on creating an **Agent-Ready Formal Specification**. This pivot ensures that the design can be executed or reconstructed by autonomous agents without ambiguity.
 
 ## **Key Accomplishments**
-1.  **Phase 1 (Atomization):** Extracted 48 atomic claims into `hfs_global_matrices.md` (YAML format).
-2.  **Phase 2 (Ontology):** Constructed a high-fidelity Mermaid graph in `hfs_ontology_graph.md`.
-3.  **Phase 3 (Synthesis):** Resolved theoretical clashes in `hfs_synthesis_report_v2.md`.
-4.  **Math Ledger:** Populated `math_ledger.md` with 9 sections of formal models (Efficiency, Graph Economies, AI Optimization).
+1.  **Prototype Hardening (v2.1) COMPLETE:** Refactored `useGameStore.ts` with formal efficiency scoring, scientific notation, and generator-to-generator logic.
+2.  **Structural Audit Processed:** Identified critical inconsistencies in the `effect` schema, missing `formulaContext` (Variable Registry), and ambiguous generator outputs.
+3.  **Knowledge Transfer Pack Initialized:** Created `_project/HFS_V2.1_KNOWLEDGE_TRANSFER_PACK.md` for zero-shot agent ingestion.
+4.  **Transition to YAML (v2.2) BEGUN:** Drafted the strict, typed YAML registry to replace JSON and enable formal execution specifications.
 
-## **Next Action: Prototype Hardening**
-- **Objective:** Apply the "Guise-System Alignment" and "Adaptive Pacing" principles to the Vite/TS prototype in `2_prototype/mvp_vite_ts`.
-- **Target:** Update `GameDesignDocument_v4.json` with the hardened RKA parameters.
-- **Task:** Implement the "Efficiency Score" tooltip and "Telemetry-Driven Pacing" logic.
+## **Next Action: Recursive Hardening (v2.2)**
+- **Objective:** Finalize the **Formal Execution Specification** to eliminate hallucination risks for future implementation agents.
+- **Task 1: YAML Spec v2.2:** Complete `_project/HFS_V2.2_HARDENED_SPEC.yaml` implementing the unified modifier schema and tiered cost scaling (1.12–1.18).
+- **Task 2: Variable Registry:** Formally define `currentInsight`, `productionRate`, and `globalMultiplier` in the formula context.
+- **Task 3: Simulation Harness:** Build `scripts/headless_sim.ts` using the new YAML spec to verify long-term stability and find bottlenecks.
 
 ## **Recovery Parameters**
-- **Architecture Baseline:** Recursive Knowledge Architecture (RKA) v2.1.
-- **Truth Source:** `hfs_global_matrices.md` & `math_ledger.md`.
-- **System Constraints:** Every design must facilitate the **Machine Zone** flow.
+- **Architecture Baseline:** Recursive Knowledge Architecture (RKA) v2.2 (Agent-Ready).
+- **Truth Source:** `HFS_V2.2_HARDENED_SPEC.yaml` (Draft) and `hfs_global_matrices.md`.
+- **System Constraints:** No formula may use an undeclared variable; all effects must use the unified modifier schema.
